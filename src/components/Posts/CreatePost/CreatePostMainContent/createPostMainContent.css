@@ -1,0 +1,114 @@
+.create-post-wrapper{
+    position: relative;
+}
+.create-post-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    background-color: var(--white);
+    padding: 2rem 1rem;
+    margin-bottom: .2rem;
+    border-radius: .3rem;
+}
+#dark .create-post-header{
+    background-color: var(--dark);
+}
+.create-post-header-left{
+    position: relative;
+}
+.create-post-header-right{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+}
+.create-post-body{
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: .3rem;
+}
+#dark .create-post-body{
+    background-color: var(--dark);
+}
+.create-post-tab-box{
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    padding-left: 2rem;
+    border-bottom: 2px solid var(--faded-black);
+}
+.create-post-tab-btn{
+    padding: 1rem .3rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: var(--dark-grey);
+    cursor: pointer;
+}
+#dark .create-post-tab-btn{
+    color: var(--white);
+}
+.create-post-tab-btn.active{
+    color: var(--primary-color);
+    opacity: 1;
+}
+#dark .create-post-tab-btn.active{
+    color: var(--primary-color);
+}
+.create-post-btn-line{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 7rem;
+    height: .2rem;
+    background-color: var(--primary-color);
+    border-radius: .3rem;
+    transition: var(--transition);
+}
+.create-post-content-box{
+    padding: 2rem 0;
+}
+.create-post-content{
+    display: none;
+}
+.create-post-content.active{
+    display: block;
+}
+.create-post-content h2{
+    margin-bottom: 1rem;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    .create-post-btn-line{
+        background-color: unset;
+    }
+}
+
+@media screen and (max-width: 520px){
+    .create-post-header{
+        justify-content: center;
+        align-items: initial;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

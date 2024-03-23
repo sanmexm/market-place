@@ -1,0 +1,11 @@
+.main-pagination{
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-pagination span{
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: 500;
+}

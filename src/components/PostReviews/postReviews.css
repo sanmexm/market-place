@@ -1,0 +1,112 @@
+.post-reviews-main-wrapper{
+    margin: 2rem;
+}
+.post-reviews-main-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.post-reviews-main-header span{
+    font-size: 1.3rem;
+    color: var(--black);
+    font-weight: 700;
+}
+.link-to-reviews{
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+.post-reviews-content-container{
+    position: relative;
+}
+.post-reviews-content-details-wrapper{
+    max-height: 30rem;
+    height: 100%;
+    overflow-y: auto;
+}
+.post-reviews-content-details{
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-radius: .3rem;
+    margin-bottom: 1rem;
+}
+.post-reviews-content-details::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 2rem);
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: .3rem;
+    margin-left: 2rem;
+}
+.post-reviews-content-details-imgBx{
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    border: 4px solid var(--white);
+    z-index: 1;
+}
+.post-reviews-content-details-imgBx img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.post-reviews-content-details-review{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+.post-reviews-content-details-review h3 small{
+    font-weight: normal;
+}
+.post-reviews-content-form{
+    position: relative;
+}
+.post-review-form-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 4rem;
+    background-color: var(--white);
+}
+.post-review-form-container-title{
+    position: relative;
+}
+.post-review-form-container-title h3{
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+    font-size: 1.4rem;
+}
+.post-reviews-login-wrapper{
+    margin-top: 2rem;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    .post-reviews-main-header{
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

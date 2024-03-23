@@ -1,0 +1,94 @@
+/* categories */
+.category-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 6%;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+}
+.category-wrapper::before{
+    content: "SHOP";
+    position: absolute;
+    top: -10rem;
+    left: 0;
+    font-weight: 900;
+    font-size: 18vw;
+    font-size: 10rem;
+    color: rgba(0,0,0,0.02);
+}
+.category-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.category-header h3{
+    color: var(--primary-color);
+    font-size: 2rem;
+    padding: 1rem .5rem;
+    border-radius: .3rem;
+    text-align: center;
+}
+.category-header-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.category-header-list h4{
+    color: var(--black);
+    font-size: var(--font-xl);
+    padding-bottom: .5rem;
+    margin-bottom: .5rem;
+    position: relative;
+}
+.category-header-list h4::before{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30%;
+    height: .1rem;
+    margin-top: 1.8rem;
+    background: var(--primary-color);
+}
+.category-header-list span{
+    font-size: var(--font-sm);
+}
+.category-grid{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3rem;
+}
+.category-grid-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: .4rem;
+    padding: 5rem 2rem;
+    gap: 1rem;
+}
+.category-grid-box:hover .category-grid-icon{
+    background: var(--primary-color);
+    color: var(--black);
+}
+.category-grid-icon{
+    padding: 1.5rem;
+    background: rgba(0,0,0,0.04);
+    border-radius: 50%;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.category-grid-box h3{
+    font-weight: normal;
+}
+/* categories XX */

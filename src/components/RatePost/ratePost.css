@@ -1,0 +1,51 @@
+.rating-wrapper {
+    position: relative;
+}
+.rating-wrapper form{
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+}
+.rating-label {
+    position: relative;
+    transition: var(--transition);
+    cursor: pointer;
+}
+.rating-label.unfilled svg {
+    color: var(--gold);
+    opacity: .4;
+    font-size: var(--font-xl);
+}
+.rating-label.filled svg {
+    font-size: var(--font-xl);
+    color: var(--gold);
+}
+.rate-btn{
+    color: var(--white);
+    background: var(--dark-grey);
+    border-radius: .3rem;
+    padding: .5rem;
+    letter-spacing: .2rem;
+}
+  
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

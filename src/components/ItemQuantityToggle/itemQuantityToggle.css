@@ -1,0 +1,49 @@
+.item-quantity-wrapper{
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+}
+.item-quantity-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--light-grey);
+    padding: .5rem;
+    color: var(--primary-color);
+}
+.item-quantity-value{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    margin: auto;
+    font-size: var(--font-md);
+}
+
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 520px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

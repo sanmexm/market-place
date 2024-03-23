@@ -1,0 +1,75 @@
+.modal-container{
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, .8);
+    /* display: grid;
+    place-items: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    transform: scale(0);
+    opacity: 0;
+    transition: .3s;
+    z-index: 10;
+
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    width: 100%;
+    min-height: 90vh;
+}
+.modal-container.active{
+    transform: scale(1);
+    opacity: 1;
+}
+.modal-account-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 30rem;
+    padding: 2rem 1rem;
+    background: var(--white);
+    border-radius: .4rem;
+    transform: translateX(25px);
+    opacity: 0;
+    transform: opacity .5s .25s, transform .5s .25s;
+    z-index: 3;
+}
+.modal-container.active .modal-account-container{
+    transform: translateY(0);
+    opacity: 1;
+}
+.account-modal-login-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
+    padding: 1rem 1.5rem;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 520px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

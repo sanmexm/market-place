@@ -1,0 +1,39 @@
+.bread-crumbs{
+    padding: 2rem 6% 0;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: var(--font-sm);
+    font-weight: var(--font-md);
+    text-transform: capitalize;
+    color: var(--black);
+}
+.bread-links{
+    display: flex;
+    align-items: center;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 520px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

@@ -1,0 +1,117 @@
+.login-popup-display-wrapper{
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.login-popup-card-tooltip{
+    position: absolute;
+    bottom: -2rem;
+    transition: opacity .4s, bottom .4s cubic-bezier(.6, -.5, .3, 1.5);
+    opacity: 0;
+    pointer-events: none;
+}
+.login-popup-card-tooltip.active{
+    bottom: 0rem;
+    opacity: 1;
+    pointer-events: initial;
+}
+.login-popup-card-content{
+    position: relative;
+    width: 20rem;
+    background-color: var(--white);
+    box-shadow: 0 16px 32px hsla(230, 50%, 20%, .1);
+    padding: 2rem 1.5rem;
+    border-radius: 1.5rem;
+    text-align: center;
+}
+/* .login-popup-card-content::after{
+    content: '';
+    width: 2.2rem;
+    height: 2.2rem;
+    background-color: var(--white);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -.75rem;
+    margin-inline: auto;
+    border-radius: .25rem;
+    rotate: 45deg;
+} */
+.login-popup-card-content small{
+    font-size: 1.2rem;
+    padding-bottom: .2rem;
+    border-bottom: 1px solid var(--faded-black);
+}
+.login-popup-card-button{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: .5rem;
+    font-weight: 500;
+    margin-top: 2rem;
+}
+.login-popup-link-wrapper{
+    cursor: pointer;
+    border-radius: .3rem;
+    border: 1px solid var(--primary-color);
+    background: var(--primary-color);
+    padding: .5rem 1.5rem;
+    color: var(--white);
+    transition: .5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .3rem;
+}
+.login-popup-link-wrapper:hover{
+    background-color: var(--white);
+    color: var(--primary-color);
+}
+.login-popup-transparent-link-wrapper{
+    cursor: pointer;
+    border-radius: .3rem;
+    border: 1px solid var(--primary-color);
+    background: var(--white);
+    padding: .5rem 1.5rem;
+    color: var(--primary-color);
+    transition: .5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .3rem;
+}
+.login-popup-transparent-link-wrapper:hover{
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 520px){
+    .login-popup-card-content{
+        width: calc(100vw - 3rem);
+    }
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

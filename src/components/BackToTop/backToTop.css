@@ -1,0 +1,77 @@
+/* back to top  */
+.back-to-top #circular-wrapper{
+	position: fixed;
+	bottom: 2rem;
+	right: 2.5rem;
+	margin-bottom: 3rem;
+	cursor: pointer;
+	z-index: 4;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+.back-to-top .move-up{
+	width: 100%;
+}
+.back-to-top .move-up #arrow-top{
+	transition: 0.5s;
+	padding: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 4rem;
+	width: 4rem;
+	border-radius: 50%;
+	color: var(--primary-color);
+	background: rgba(255, 255, 255, 0.4);
+	-webkit-backdrop-filter: blur(4px);
+  	backdrop-filter: blur(4px);
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.back-to-top .move-up #arrow-top:focus, .back-to-top .move-up #arrow-top:hover{
+	color: var(--white);
+	background: var(--primary-color);
+}
+.btnEntrance{
+	animation-duration: .5s;
+	animation-fill-mode: both;
+	animation-name: btnEntrance;
+}
+/* Zoom in */
+@keyframes btnEntrance{
+	from{
+		opacity: 0;
+		transform: translate3d(0, 100%, 0);
+	}
+	to{
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+.btnExit{
+	animation-duration: 0.25s;
+	animation-fill-mode: both;
+	animation-name: btnExit;
+}
+/* zoomout */
+@keyframes btnExit{
+	from{
+		opacity: 1;
+	}
+	to{
+		opacity: 0;
+		transform: translate3d(0, 100%, 0);
+	}
+}
+/* back to top XX */
+@media screen and (max-width: 768px){
+	.back-to-top #circular-wrapper{
+		right: 1.8rem;
+		bottom: 4rem;
+	}
+	.back-to-top .move-up #arrow-top{
+		padding: .5rem;
+		height: 2rem;
+		width: 2rem;
+	}
+}
+/*back-to-top*/

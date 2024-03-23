@@ -1,0 +1,37 @@
+.create-user-profile-main-content{
+    flex-basis: 73%;
+}
+.create-user-profile-side-content{
+    position: sticky;
+    top: 8rem;
+    flex-basis: 25%;
+    align-self: flex-start;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    .create-user-profile-main-content,
+    .create-user-profile-side-content{
+        flex-basis: 100%;
+    }
+    .create-user-profile-side-content{
+        position: relative;
+        top: unset;
+    }
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

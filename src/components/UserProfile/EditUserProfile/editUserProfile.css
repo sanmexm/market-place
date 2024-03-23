@@ -1,0 +1,36 @@
+.edit-user-profile-wrapper{
+    position: relative;
+    padding: 2rem 0;
+    background-color: var(--white);
+    width: 100%;
+}
+#dark .edit-user-profile-wrapper{
+    background-color: var(--dark);
+}
+.edit-user-profile-form-wrapper{
+    position: relative;
+}
+.edit-user-profile-form{
+    position: relative;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

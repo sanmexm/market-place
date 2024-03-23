@@ -1,0 +1,65 @@
+.wish-favorite-btn{
+    cursor: pointer;
+}
+.wish-activity-svg span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    background-color: var(--faded-whine);
+    border-radius: 50%;
+}
+.wish-favorite-btn-wrap.liked .wish-activity-svg{
+    color: var(--whine);
+    animation: like 0.3s ease-in forwards;
+}
+.wish-favorite-btn-wrap.unlike .wish-activity-svg{
+    animation: unlike 0.17s ease-in reverse forwards;
+}
+@keyframes like{
+    0%{
+        transform: scale(0)
+    }
+    50%{
+        transform: scale(1.1);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+@keyframes unlike{
+    0%{
+        transform: scale(1)
+    }
+    50%{
+        transform: scale(0.5);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 520px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

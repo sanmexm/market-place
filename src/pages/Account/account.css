@@ -1,0 +1,86 @@
+.account-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 90vh;
+}
+.account-reg-container,
+.account-login-container{
+    display: flex;
+    flex-direction: column;
+    max-width: 30rem;
+    width: 100%;
+    gap: 2rem;
+    padding: 1rem 2rem;
+    background-color: var(--white);
+}
+.account-reg-container{
+    margin: 5rem 0;
+}
+.account-login-container{
+    margin: 0;
+}
+/* .account-field-wrapper-double{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: .5rem;
+} */
+.account-login-container-title{
+    display: block;
+}
+.account-login-input-btn-pass-container{
+    position: relative;
+}
+.account-login-group-wrapper{
+    position: relative;
+    margin-bottom: 1rem;
+}
+.account-login-show-hide-pass-container{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: .5rem;
+    margin-right: .3rem;
+}
+.forgot-password{
+    float: right;
+    margin-bottom: .5rem;
+    color: var(--primary-color);
+    text-transform: capitalize;
+}
+.have-account-wrapper{
+    text-align: center;
+    display: flex;
+    gap: .2rem;
+}
+.account-reg-log{
+    color: var(--primary-color);
+}
+.registration-success-message{
+    text-align: center;
+    margin-top: .5rem;
+    font-weight: 500;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}
