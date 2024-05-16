@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {Button, EditUserLogin, EditUserPassword, EditUserProfile, EditUserProfileImage, EmptyCard, Loader, UserHeader, ViewUserProfile} from '../..';
+import {Button, EditUserEmailAddress, EditUserProfile, EditUserProfileImage, EditUserUsername, EmptyCard, Loader, UserHeader, ViewUserProfile} from '../..';
 import { AddBoxRoundedIcon } from '../../../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionFetchUserProfile } from '../../../actions/profiles';
-// import { actionFetchUser } from '../../../actions/users';
+import { actionFetchUser } from '../../../actions/users';
+import { useNavigate } from 'react-router-dom';
 
 import './userProfileMainContent.css'
 
@@ -11,27 +12,55 @@ const UserProfileMainContent = () => {
     const authData                        = JSON.parse(localStorage.getItem('authData'))
     const userId                          = authData?.result?._id
     const dispatch                        = useDispatch();
-    const {isLoading, singleUserProfile } = useSelector((state) => state.profileList)
+    const navigate                        = useNavigate();
+    const {singleUser}                    = useSelector((state) => state.userList)
+    const {isLoading, singleUserProfile, getAllProfiles } = useSelector((state) => state.profileList)
     const [onePost, setOnePost]           = useState(null);
     const lineRef                         = useRef(null);
     const [activeTab, setActiveTab]       = useState(0);
-    const tabButtons                      = ['Profile', 'Edit profile', 'Edit Image', 'Edit login details', 'Change password'];
+    const [userData, setUserData]         = useState(singleUser);
+    const [userProfileData, setUserProfileData] = useState(singleUserProfile);
+    const tabButtons                      = ['Profile', 'Edit profile', 'Edit Image', 'Edit Email', 'Edit Username'];
 
     const handleTabClick = (index) => {
       setActiveTab(index);
     };
 
     useEffect(() => {
+      dispatch(actionFetchUserProfile(userId))
+    }, [userId, dispatch])
+
+    useEffect(() => {
+      dispatch(actionFetchUser(userId))
+    }, [userId, dispatch])
+
+    useEffect(() => {
+      async function fetchData() {
+        if (!isLoading && singleUserProfile.length > 0) {
+          const post = singleUserProfile[0]; // Assuming singleUserProfile has only one user
+          try {
+            const userDataResponse        = await dispatch(actionFetchUser(post.userId));
+            const userProfileDataResponse = await dispatch(actionFetchUserProfile(post.userId));
+            setUserData(userDataResponse);
+            setUserProfileData(userProfileDataResponse);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      }
+      fetchData();
+    }, [dispatch, isLoading, singleUserProfile]);
+
+    // if profile account doesn't have an Id, navigate to create profile
+
+    useEffect(() => {
+      // if (Array.isArray(getAllProfiles) && getAllProfiles.find(profile => profile.userId === userId)) {
       if (singleUserProfile && singleUserProfile.userId === userId) {
         setOnePost(singleUserProfile);
       } else {
-        setOnePost(null);
+        navigate(`/users/create-profile`);
       }
-    }, [userId, singleUserProfile]);
-
-    useEffect(() => {
-      dispatch(actionFetchUserProfile(userId))
-    }, [userId, dispatch])
+    }, [userId, navigate, getAllProfiles, singleUserProfile]);
 
     useEffect(() => {
       if (lineRef.current) {
@@ -73,19 +102,19 @@ const UserProfileMainContent = () => {
 
                 <div className='user-profile-content-box'>
                   <div className={`user-profile-content ${activeTab === 0 ? 'active' : ''}`}>
-                    <ViewUserProfile authData={authData} />
+                    <ViewUserProfile authData={authData} userProfileData={userProfileData} userData={userData} />
                   </div>
                   <div className={`user-profile-content ${activeTab === 1 ? 'active' : ''}`}>
-                    {/* <EditUserProfile id={userId} /> */}
+                    <EditUserProfile id={userId} userProfileData={userProfileData} userData={userData}  />
                   </div>
                   <div className={`user-profile-content ${activeTab === 2 ? 'active' : ''}`}>
-                    {/* <EditUserProfileImage /> */}
+                    <EditUserProfileImage id={userId} userProfileData={userProfileData} />
                   </div>
                   <div className={`user-profile-content ${activeTab === 3 ? 'active' : ''}`}>
-                    {/* <EditUserLogin />  */}
+                    <EditUserEmailAddress id={userId} userData={userData} /> 
                   </div>
                   <div className={`user-profile-content ${activeTab === 4 ? 'active' : ''}`}>
-                    {/* <EditUserPassword /> */}
+                    <EditUserUsername id={userId} userData={userData} /> 
                   </div>
                 </div>
               </div>

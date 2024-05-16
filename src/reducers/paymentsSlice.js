@@ -8,6 +8,11 @@ const initialState = {
     currentPage: 1,
     numberOfPages: 0,
     totalNumber: 0,
+    confirmedPaymentReceipt: null,
+    paymentSuccess: null,
+    paymentMessage: null,
+    paymentUserPayReceipt: null,
+    paymentUrl: null,
     singlePayment: null,
     updatePayment: null,
     deletePayment: null,
@@ -24,10 +29,15 @@ const paymentsSlice = createSlice({
             state.isLoading     = false;
         },
         setPayments: (state, action) => {
-            state.getAllPayments = action.payload.data;
-            state.currentPage         = action.payload.currentPage;
-            state.numberOfPages       = action.payload.numberOfPages;
-            state.totalNumber         = action.payload.totalNumber;
+            state.paymentUrl    = action.payload.session;
+        },
+        setFirstPaymentSession: (state, action) => {
+            state.confirmedPaymentReceipt  = action.payload.data;
+        },
+        setSuccessPaymentSession: (state, action) => {
+            state.paymentSuccess         = action.payload.success;
+            state.paymentMessage         = action.payload.message;
+            state.paymentUserPayReceipt  = action.payload.userPayReceipt;
         },
         setSinglePayment: (state, action) => {
             state.singlePayment       = action.payload;
@@ -49,5 +59,5 @@ const paymentsSlice = createSlice({
     }
 });
 
-export const { startLoading, endLoading, setPayments, setSinglePayment, setPaymentsSearch, setUpdatePayment, setDeletePayment } = paymentsSlice.actions
+export const { startLoading, endLoading, setPayments, setFirstPaymentSession, setSuccessPaymentSession, setSinglePayment, setPaymentsSearch, setUpdatePayment, setDeletePayment } = paymentsSlice.actions
 export default paymentsSlice.reducer

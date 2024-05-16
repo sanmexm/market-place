@@ -5,15 +5,17 @@ import { Link } from 'react-router-dom'
 import './vendorToolTip.css'
 
 const VendorToolTip = ({vendorProfile, vendorUser}) => {
+    // maybe you drill over the userId and use the useEffect property in this Component
     const [vendorOpen, setVendorOpen]                 = useState(false)
-
     const handleVendorAccountClick = () => {
         setVendorOpen((prev) => !prev)
     }
+    // console.log(vendorProfile)
 
   return (
     <>
         <div className='vendor-display-wrapper'>
+            {/* <h3>Vendor {vendorProfile?.userId}</h3> */}
             <h3>Vendor</h3>
             <div className={vendorOpen ? 'vendor-display-img active' : 'vendor-display-img'} onClick={handleVendorAccountClick}>
                 <img src={vendorProfile?.selectedFile || userImg} alt='user img' />
@@ -41,7 +43,7 @@ const VendorToolTip = ({vendorProfile, vendorUser}) => {
                         <div className='vendor-card-name'>
                             {vendorUser?.firstName} {vendorUser?.lastName}
                         </div>
-                        <small>Engineer</small>
+                        <small>{vendorProfile?.category} account</small>
 
                         <div className='vendor-card-button'>
                             <div className='vendor-card-chat-button'><img src={chat} alt='chat' /></div>

@@ -91,6 +91,28 @@ export const actionFetchUser = (id) => async(dispatch) => {
     }
 }
 
+export const actionUpdateUserEmail = (id, email) => async(dispatch) => {
+    try{
+        dispatch({ type: startLoading.type })
+        const { data } = await api.updateUserEmailProfile(id, email)
+        dispatch({
+            type: setUpdateUser.type,
+            payload: data
+        })
+        dispatch({ type: endLoading.type })
+        return data
+    }catch(error){
+        console.log(error)
+        if (error.response) {
+            console.log("Error status:", error.response.status);
+            return error.response; // Return the error response object
+        } else {
+            console.log("Error details:", error.message);
+            throw error; // Re-throw the error to be caught in the handleSubmit function
+        }
+    }
+}
+
 export const actionUpdateUser = (id, updatedUser) => async(dispatch) => {
     try{
         dispatch({ type: startLoading.type })

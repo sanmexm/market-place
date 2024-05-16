@@ -22,7 +22,7 @@ const postValidateCoverFile = (postData) => {
     return { isValid, errors };
 }
 
-const postValidateName = (postData) => {
+const postValidateName = (postData, getAllStores) => {
     const errors = [];
     let isValid  = true;
     const nameRegex = /^[A-Za-z\s]+$/;
@@ -31,6 +31,9 @@ const postValidateName = (postData) => {
     if (postData === '') {
         errors.push('');
         isValid = true;
+    } else if (Array.isArray(getAllStores) && getAllStores.map(store => store.name).includes(postData)) {
+        errors.push('store name already exist');
+        isValid = false;
     } else if (postData.length < 2) {
         errors.push('name must be at least 2 letters');
         isValid = false;

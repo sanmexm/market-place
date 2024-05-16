@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import { VisibilityIcon, VisibilityOffIcon } from '../../../utils/constants'
-import {Button, FormField, Loader} from '../..'
-import { actionFetchUser, actionUpdateUser } from '../../../actions/users'
+import {Button, FormField, Loader, SubmitPopUp} from '../..'
+import { actionFetchUsers, actionUpdateUser } from '../../../actions/users'
 import { usersValidateConfirmPassword, usersValidatePassword } from '../../validations/users/usersProfile'
+import { profile } from '../../../assets'
 
 import './editUserPassword.css'
 
-const EditUserPassword = () => {
+const EditUserPassword = ({id}) => {
     const dispatch                                          = useDispatch();
-    const { id }                                            = useParams();
-    const { singleUser }                                    = useSelector((state) => state.userList);
+    const { singleUser, currentPage  }                      = useSelector((state) => state.userList);
+    const [onOpen, setOnOpen]                               = useState(false);
     const [hideShow, setHideShow]                           = useState(false);
     const [savingInfo, setSavingInfo]                       = useState(false);
     const [isButtonDisabled, setIsButtonDisabled]           = useState(true);
-    const [fetchError, setFetchError]                       = useState(false);
     const [passwordErrors, setPasswordErrors]               = useState(null);
     const [confirmPasswordErrors, setConfirmPasswordErrors] = useState(null);
     const [errorMessage, setErrorMessage]                   = useState(null);
     
     const [ postData, setPostData ]           = useState({password: '', confirmPassword: ''})
-
     const [ isLoadingBtn, setIsLoadingBtn ]   = useState({password: false, confirmPassword: false})
-
     const [ isValid, setIsValid ]             = useState({password: false, confirmPassword: false})
 
     const useDebounce = (value, delay ) => {
@@ -47,6 +44,10 @@ const EditUserPassword = () => {
       setIsLoadingBtn((prevState) => ({ ...prevState, [name]: true }));
       setPostData((prevState) => ({ ...prevState, [name]: value }));
     }
+
+    useEffect(() => {
+      dispatch(actionFetchUsers(currentPage)); // You can pass the page number as needed
+    }, [dispatch, currentPage]);
 
     useEffect(() => {
         const validatePassword = () => {
@@ -98,37 +99,38 @@ const EditUserPassword = () => {
       setPostData({password: '', confirmPassword: '',});
     }, [singleUser]);
 
-    useEffect(() => {
-      dispatch(actionFetchUser(id))
-      .then((response) => {
-        //this is getting payload and not payload.data in redux, reason for this method
-        if(!response) {
-          setFetchError(true)
-        }
-      })
-    }, [id, dispatch])
-
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    const returnConfirm = window.confirm('Are you sure you want to update doctor?')
-    if(returnConfirm){
-      setSavingInfo(true);
-      const response = await dispatch(actionUpdateUser(id, postData))
-      try{
-        if (response.status === 200){
-          toast.success(response.successMessage)
-          setErrorMessage(null)
-          setSavingInfo(false)
-        } else if (response.status === 400) {
-          setErrorMessage(response.errorMessage);
-          setSavingInfo(false)
-        }
-      }catch(error){
-        setErrorMessage("unable to upload data, please check your internet and try again")
-        setSavingInfo(false)
-      }
+    const handleModalSubmit = () => {
+      setOnOpen(true)
     }
-  }
+  
+    const handleSubmit = async(e) => {
+      e.preventDefault();
+      handleModalSubmit()
+    }
+
+    const cancelPostCreation = () => {
+      setOnOpen(false); // Close the modal
+      setSavingInfo(false);
+    };
+
+    const confirmPostCreation = async() => {
+      setSavingInfo(true);
+        const response = await dispatch(actionUpdateUser(id, postData))
+          try{
+            if (response.success === true) {
+              toast.success("Account updated successfully")
+              setErrorMessage(null);
+              setSavingInfo(false)
+            } else if (response.status === 400) {
+              setErrorMessage(response.errorMessage);
+            }
+          }catch(error){
+            setErrorMessage(error.response.status)
+            setErrorMessage("unable to upload data, please check your internet and try again")
+            setSavingInfo(false)
+          }
+      setOnOpen(false); // Close the modal after confirmation
+    };
 
   return (
     <>
@@ -143,6 +145,7 @@ const EditUserPassword = () => {
 
           <FormField inputType type={hideShow ? 'text' : 'password'} labelName="confirm password" name="confirmPassword" value={postData.confirmPassword} handleChange={handleChange} isLoadingBtn={isLoadingBtn.confirmPassword} isValid={isValid.confirmPassword} errors={confirmPasswordErrors || []} />
 
+          <SubmitPopUp onOpen={onOpen} onClose={cancelPostCreation} onConfirm={confirmPostCreation} popUpImage={profile} prompt="Are you sure you want to update account" />
           <Button onClickButton buttonClickWrap={savingInfo ? `button-login-submitted` : `button-login-submit`} onClickName={savingInfo ? <>{<Loader />} Updating...</> : "Update"} isButtonDisabled={isButtonDisabled} buttonClasses={savingInfo ? ['button-disabled'] : (isButtonDisabled ? ['buttonDisabledClass'] : ['buttonEnabledClass'])} disabled={savingInfo} />
           {errorMessage && (
             <div className="form-response-message">

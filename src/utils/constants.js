@@ -5,6 +5,7 @@ import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownR
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
 import CloudUploadRoundedIcon from '@mui/icons-material/CloudUploadRounded';
+import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -35,9 +36,12 @@ import DesignServicesRoundedIcon from '@mui/icons-material/DesignServicesRounded
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
+import ShoppingBasketRoundedIcon from '@mui/icons-material/ShoppingBasketRounded';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
+import PaymentsRoundedIcon from '@mui/icons-material/PaymentsRounded';
+import LocalShippingRoundedIcon from '@mui/icons-material/LocalShippingRounded';
 import ShoppingCartCheckoutRoundedIcon from '@mui/icons-material/ShoppingCartCheckoutRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
@@ -51,6 +55,8 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import HourglassEmptyRoundedIcon from '@mui/icons-material/HourglassEmptyRounded';
+import SupportAgentRoundedIcon from '@mui/icons-material/SupportAgentRounded';
+import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
 import { orders, posts, profileHeart, advertAdvertising, advertBanner, stores, payment, subscriber, profile } from '../assets';
 
 export {
@@ -61,6 +67,7 @@ export {
     KeyboardArrowRightRoundedIcon,
     KeyboardBackspaceRoundedIcon,
     CloudUploadRoundedIcon,
+    DownloadRoundedIcon,
     MenuRoundedIcon,
     CloseRoundedIcon,
     TwitterIcon,
@@ -83,9 +90,12 @@ export {
     StarOutlineRoundedIcon,
     StarRateRoundedIcon,
     AddShoppingCartRoundedIcon,
+    ShoppingBasketRoundedIcon,
     DeleteOutlineRoundedIcon,
     AddRoundedIcon,
     RemoveRoundedIcon,
+    PaymentsRoundedIcon,
+    LocalShippingRoundedIcon,
     ShoppingCartCheckoutRoundedIcon,
     FavoriteBorderRoundedIcon,
     FavoriteRoundedIcon,
@@ -99,6 +109,8 @@ export {
     VisibilityRoundedIcon,
     DeleteRoundedIcon,
     HourglassEmptyRoundedIcon,
+    SupportAgentRoundedIcon,
+    ShareRoundedIcon,
 }
 
 export const navLinks = [
@@ -114,6 +126,34 @@ export const navSubLinks = [
     { name: 'subitem2', link: '/'},
     { name: 'subitem3', link: '/'},
     { name: 'subitem4', link: '/'},
+]
+
+export const faqs = [
+    {
+      id: 0,  
+      header: "how do i navigate market place profile ?",
+      text: "Velit ipsum amet minim laborum voluptate aliquip fugiat enim ipsum sit sunt. Excepteur tempor ad sit commodo ut occaecat cillum tempor nisi in. Mollit dolore eiusmod aliqua irure laborum amet laboris. Enim nostrud anim ut velit aliquip ad quis irure fugiat ex aliqua aliqua elit. Ipsum officia sit quis sint. Anim enim qui qui do duis qui consequat cillum."
+    },
+    {
+      id: 1,
+      header: "how do i contact customer support ?",
+      text: "Velit ipsum amet minim laborum voluptate aliquip fugiat enim ipsum sit sunt. Excepteur tempor ad sit commodo ut occaecat cillum tempor nisi in. Mollit dolore eiusmod aliqua irure laborum amet laboris. Enim nostrud anim ut velit aliquip ad quis irure fugiat ex aliqua aliqua elit. Ipsum officia sit quis sint. Anim enim qui qui do duis qui consequat cillum. Enim nostrud anim ut velit aliquip ad quis irure fugiat ex aliqua aliqua elit. Ipsum officia sit quis sint. Anim enim qui qui do duis qui consequat cillum Enim nostrud anim ut velit aliquip ad quis irure fugiat ex aliqua aliqua elit. Ipsum officia sit quis sint. Anim enim qui qui do duis qui consequat cillum"
+    },
+    {
+      id: 2,
+      header: "Is my email address visible to others ?",
+      text: "Velit ipsum amet minim laborum voluptate aliquip fugiat enim ipsum sit sunt. Excepteur tempor ad sit commodo ut occaecat cillum tempor nisi in. Mollit dolore eiusmod aliqua irure laborum amet laboris. Enim nostrud anim ut velit aliquip ad quis irure fugiat ex aliqua aliqua elit. Ipsum officia sit quis sint. Anim enim qui qui do duis qui consequat cillum."
+    },
+    {
+      id: 3,
+      header: "Is my email address visible to others ?",
+      text: "Velit ipsum amet minim laborum voluptate aliquip fugiat enim ipsum sit sunt. Excepteur tempor ad sit commodo ut occaecat cillum tempor nisi in. Mollit dolore eiusmod aliqua irure laborum amet laboris. Enim nostrud anim ut velit aliquip ad quis irure fugiat ex aliqua aliqua elit. Ipsum officia sit quis sint. Anim enim qui qui do duis qui consequat cillum."
+    },
+    {
+      id: 4,
+      header: "Is my email address visible to others ?",
+      text: "Velit ipsum amet minim laborum voluptate aliquip fugiat enim ipsum sit sunt. Excepteur tempor ad sit commodo ut occaecat cillum tempor nisi in. Mollit dolore eiusmod aliqua irure laborum amet laboris. Enim nostrud anim ut velit aliquip ad quis irure fugiat ex aliqua aliqua elit. Ipsum officia sit quis sint. Anim enim qui qui do duis qui consequat cillum."
+    }
 ]
 
 export const featuresList = [

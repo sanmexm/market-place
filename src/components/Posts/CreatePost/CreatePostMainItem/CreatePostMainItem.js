@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import {Button, FormField, Loader, SubmitPopUp} from '../../..'
 import { PhotoRoundedIcon, postCategoryOption, postTagOption, postTypeOption } from '../../../../utils/constants'
-import { postValidateCategory, postValidateDescription, postValidatePostType, postValidatePrice, postValidateSelectedFile, postValidateTag, postValidateTitle } from '../../../validations/posts/createPost'
+import { postValidateCategory, postValidateDescription, postValidatePostType, postValidatePrice, postValidateSelectedFile, postValidateStoreName, postValidateTag, postValidateTitle } from '../../../validations/posts/createPost'
 import { actionCreatePost } from '../../../../actions/posts'
+import { create } from '../../../../assets'
+import { actionFetchStoresByUser } from '../../../../actions/stores'
 
 import './createPostMainItem.css'
-import { create } from '../../../../assets'
 
-const CreatePostMainItem = ({postItem}) => {
+const CreatePostMainItem = () => {
     const authData                                      = JSON.parse(localStorage.getItem('authData'))
-    const userUniqueId                                  = authData?.result?._id
+    const userId                                        = authData?.result?._id
+    const {getStoresByUser}                             = useSelector((state) => state.storeList)
     const dispatch                                      = useDispatch();
     const [savingInfo, setSavingInfo]                   = useState(false);
     const [isButtonDisabled, setIsButtonDisabled]       = useState(true);
     const [onOpen, setOnOpen]                           = useState(false);
+    const [storeMenuOptions, setStoreMenuOptions]       = useState(getStoresByUser);
+    const [storeNameErrors, setStoreNameErrors]         = useState(null);
     const [postTypeErrors, setPostTypeErrors]           = useState(null);
     const [productImg, setProductImg]                   = useState(null);
     const [selectedFileErrors, setSelectedFileErrors]   = useState(null);
@@ -25,10 +29,20 @@ const CreatePostMainItem = ({postItem}) => {
     const [priceErrors, setPriceErrors]                 = useState(null);
     const [descriptionErrors, setDescriptionErrors]     = useState(null);
     const [errorMessage, setErrorMessage]               = useState(null);
+
+    useEffect(() => {
+      dispatch(actionFetchStoresByUser(userId, 1))
+    }, [userId, dispatch])
+
+    useEffect(() => {
+      if (getStoresByUser) {
+        setStoreMenuOptions([{_id: '', name: ''}, ...getStoresByUser]);
+      }
+    }, [getStoresByUser]);
     
-    const [postData, setPostData]             = useState({userId: userUniqueId, postType: '', selectedFile: '', selectedFileImages: '', title: '', category: '', tag: '', price: '', description: ''})
-    const [ isLoadingBtn, setIsLoadingBtn ]   = useState({postType: false, selectedFile: false, selectedFileImages: false, title: false, category: false, tag: false, price: false, description: false})
-    const [ isValid, setIsValid ]             = useState({postType: false, selectedFile: false, selectedFileImages: false, title: false, category: false, tag: false, price: false, description: false})
+    const [postData, setPostData]             = useState({userId: userId, storeName: '', postType: '', selectedFile: '', selectedFileImages: '', title: '', category: '', tag: '', price: '', description: ''})
+    const [ isLoadingBtn, setIsLoadingBtn ]   = useState({postType: false, storeName: false, selectedFile: false, selectedFileImages: false, title: false, category: false, tag: false, price: false, description: false})
+    const [ isValid, setIsValid ]             = useState({postType: false, storeName: false, selectedFile: false, selectedFileImages: false, title: false, category: false, tag: false, price: false, description: false})
 
     const useDebounce = (value, delay ) => {
       const [debounced, setDebounced] = useState(value)
@@ -115,6 +129,19 @@ const CreatePostMainItem = ({postItem}) => {
     }
 
     useEffect(() => {
+      const validateStoreName = () => {
+        const { isValid, errors } = postValidateStoreName(debouncedPostData.storeName, getStoresByUser);
+        setIsValid((prevState) => ({
+          ...prevState,
+          storeName: isValid,
+        }));
+        setIsLoadingBtn((prevState) => ({
+          ...prevState,
+          storeName: false,
+        }));
+        return errors;
+      }
+
       const validatePostType = () => {
         const { isValid, errors } = postValidatePostType(debouncedPostData.postType);
         setIsValid((prevState) => ({
@@ -206,6 +233,7 @@ const CreatePostMainItem = ({postItem}) => {
         return errors;
       }
       
+      const storeNameErrors     = validateStoreName()
       const postTypeErrors      = validatePostType();
       const selectedFileErrors  = validateSelectedFile();
       const titleErrors         = validateTitle();
@@ -214,6 +242,7 @@ const CreatePostMainItem = ({postItem}) => {
       const priceErrors         = validatePrice();
       const descriptionErrors   = validateDescription();
 
+      setStoreNameErrors(storeNameErrors)
       setPostTypeErrors(postTypeErrors)
       setSelectedFileErrors(selectedFileErrors)
       setTitleErrors(titleErrors)
@@ -224,7 +253,7 @@ const CreatePostMainItem = ({postItem}) => {
 
       const hasErrors = () => {
         // Check if any error exists in the form data
-        if (postTypeErrors.length > 0 || selectedFileErrors.length > 0 || titleErrors.length > 0 || categoryErrors.length > 0 || tagErrors.length > 0 || priceErrors.length > 0 || descriptionErrors.length > 0) {
+        if (storeNameErrors.length > 0 || postTypeErrors.length > 0 || selectedFileErrors.length > 0 || titleErrors.length > 0 || categoryErrors.length > 0 || tagErrors.length > 0 || priceErrors.length > 0 || descriptionErrors.length > 0) {
           return true;
         } else{
           return false;
@@ -233,7 +262,7 @@ const CreatePostMainItem = ({postItem}) => {
       const hasFormErrors = hasErrors();
       setIsButtonDisabled(hasFormErrors);
   
-    }, [debouncedPostData])
+    }, [debouncedPostData, getStoresByUser])
 
     const handleModalSubmit = () => {
       setOnOpen(true)
@@ -251,6 +280,7 @@ const CreatePostMainItem = ({postItem}) => {
 
     const confirmPostCreation = async() => {
       setSavingInfo(true);
+      setIsButtonDisabled(true)
         const response = await dispatch(actionCreatePost(postData));
         try{
           if (response.success === true) {
@@ -278,11 +308,13 @@ const CreatePostMainItem = ({postItem}) => {
   return (
     <>
       <form onSubmit={handleSubmit} autoComplete="off">
+          <FormField selectType fullNameOption labelName="Store Name" name="storeName" value={postData.storeName} handleChange={handleChange} options={storeMenuOptions} isLoadingBtn={isLoadingBtn.storeName} isValid={isValid.storeName} errors={storeNameErrors || []} />
+
           <FormField selectType labelName="Post Type" name="postType" value={postData.postType} handleChange={handleChange} options={postTypeOption} isLoadingBtn={isLoadingBtn.postType} isValid={isValid.postType} errors={postTypeErrors || []} />
 
           <div className='reg-image-group'>
             <div onChange={handleProductImageUpload}>
-                <FormField fileInputType name="selectedFile" handleChange={handleFileChange} isLoadingBtn={isLoadingBtn.selectedFile} isValid={isValid.selectedFile} errors={selectedFileErrors || []} />
+              <FormField fileInputType name="selectedFile" handleChange={handleFileChange} isLoadingBtn={isLoadingBtn.selectedFile} isValid={isValid.selectedFile} errors={selectedFileErrors || []} />
             </div>
             <div className='reg-image-preview-wrapper'>
               {productImg ? <img src={productImg} alt={productImg} />  : <span><PhotoRoundedIcon /></span>}

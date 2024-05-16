@@ -1,0 +1,37 @@
+.view-user-post-main-content{
+    flex-basis: 73%;
+}
+.view-user-post-side-content{
+    position: sticky;
+    top: 8rem;
+    flex-basis: 25%;
+    align-self: flex-start;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    .view-user-post-main-content,
+    .view-user-post-side-content{
+        flex-basis: 100%;
+    }
+    .view-user-post-side-content{
+        position: relative;
+        top: unset;
+    }
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

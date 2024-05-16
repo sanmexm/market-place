@@ -1,9 +1,9 @@
 import { startLoading, endLoading, setAddToWishList, setRemoveWishList, setClearWishList  } from '../reducers/wishlistSlice'
 
-export const actionAddWishList = (product) => async(dispatch) => {
+export const actionAddWishList = (item) => async(dispatch) => {
     try{
         dispatch({ type: startLoading.type })
-        dispatch(setAddToWishList(product));
+        dispatch(setAddToWishList(item));
         dispatch({ type: endLoading.type })
         // return data
     }catch(error){
@@ -11,10 +11,10 @@ export const actionAddWishList = (product) => async(dispatch) => {
     }
 }
 
-export const actionRemoveWishList = (product) => async(dispatch) => {
+export const actionRemoveWishList = (item) => async(dispatch) => {
     try{
         dispatch({ type: startLoading.type })
-        dispatch(setRemoveWishList(product));
+        dispatch(setRemoveWishList(item));
         dispatch({ type: endLoading.type })
         // return data
     }catch(error){

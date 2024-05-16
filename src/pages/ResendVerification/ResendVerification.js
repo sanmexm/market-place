@@ -95,6 +95,7 @@ const ResendVerification = () => {
     e.preventDefault();
     try {
       setSavingInfo(true); // Set loading to true to show loading state
+      setIsButtonDisabled(true)
       const response = await dispatch(actionResendVerification(postData.emailAddress));
       if (response && response.status === 200) {
         setSuccessMessage(response.data.message)

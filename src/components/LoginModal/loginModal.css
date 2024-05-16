@@ -1,27 +1,21 @@
 .modal-container{
     position: fixed;
+    width: 100%;
     inset: 0;
     background-color: rgba(0, 0, 0, .8);
-    /* display: grid;
-    place-items: center; */
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    transform: scale(0);
-    opacity: 0;
-    transition: .3s;
-    z-index: 10;
-
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    width: 100%;
     min-height: 90vh;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .5s ease-out;
+    z-index: 10;
 }
 .modal-container.active{
-    transform: scale(1);
     opacity: 1;
+    visibility: visible;
 }
 .modal-account-container{
     position: relative;
@@ -32,14 +26,16 @@
     padding: 2rem 1rem;
     background: var(--white);
     border-radius: .4rem;
-    transform: translateX(25px);
     opacity: 0;
-    transform: opacity .5s .25s, transform .5s .25s;
+    visibility: hidden;
+    transform: scale(1.2);
+    transition: all .4s ease-out;
     z-index: 3;
 }
 .modal-container.active .modal-account-container{
-    transform: translateY(0);
+    transform: scale(1);
     opacity: 1;
+    visibility: visible;
 }
 .account-modal-login-container{
     display: flex;

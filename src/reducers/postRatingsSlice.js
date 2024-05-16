@@ -4,6 +4,7 @@ import { POST_RATINGS } from "../constants/actionTypes";
 const initialState = {
     isLoading: true,
     getAllPostRatings: [],
+    getUsersPostRatings: [],
     searchPostRating: [],
     currentPage: 1,
     numberOfPages: 0,
@@ -26,6 +27,12 @@ const postRatingsSlice = createSlice({
         },
         setPostRatings: (state, action) => {
             state.getAllPostRatings   = action.payload.data;
+            state.currentPage         = action.payload.currentPage;
+            state.numberOfPages       = action.payload.numberOfPages;
+            state.totalNumber         = action.payload.totalNumber;
+        },
+        setUsersPostRatings: (state, action) => {
+            state.getUsersPostRatings = action.payload.data;
             state.currentPage         = action.payload.currentPage;
             state.numberOfPages       = action.payload.numberOfPages;
             state.totalNumber         = action.payload.totalNumber;
@@ -65,5 +72,5 @@ const postRatingsSlice = createSlice({
 //         sumTotal: action.payload.ratingSum,
 // }
 
-export const { startLoading, endLoading, setPostRatings, setSinglePostRating, setPostRatingsSearch, setUpdatePostRating, setDeletePostRating } = postRatingsSlice.actions
+export const { startLoading, endLoading, setPostRatings, setUsersPostRatings, setSinglePostRating, setPostRatingsSearch, setUpdatePostRating, setDeletePostRating } = postRatingsSlice.actions
 export default postRatingsSlice.reducer

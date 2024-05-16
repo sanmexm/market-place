@@ -14,6 +14,9 @@ import ToggleModeButton from "./ToggleModeButton/ToggleModeButton"
 import TruncatedText from './TruncatedText/TruncatedText'
 import PleaseNote from './PleaseNote/PleaseNote'
 import BreadCrumbs from './BreadCrumbs/BreadCrumbs'
+import SubHeaders from './SubHeaders/SubHeaders'
+import ContactForm from './ContactForm/ContactForm';
+import ContactAddressInfo from './ContactAddressInfo/ContactAddressInfo';
 import SearchHeader from './Search/SearchHeader/SearchHeader'
 import ProductDisplay from './ProductDisplay/ProductDisplay';
 import SimilarPosts from './Posts/SimilarPosts/SimilarPosts'
@@ -28,6 +31,8 @@ import OtherSupplierPosts from './OtherSupplierPosts/OtherSupplierPosts'
 import ItemQuantityToggle from './ItemQuantityToggle/ItemQuantityToggle'
 import WishlistToggle from './WishlistToggle/WishlistToggle'
 import CartItems from './CartItems/CartItems'
+import CheckoutMainContent from './Checkout/CheckoutMainContent/CheckoutMainContent';
+import CheckoutSideContent from './Checkout/CheckoutSideContent/CheckoutSideContent';
 import Hero from './HomeComponents/Hero/Hero';
 import AboutUs from './HomeComponents/AboutUs/AboutUs';
 import Features from './HomeComponents/Features/Features';
@@ -53,25 +58,35 @@ import UserProfileSideContent from './UserProfile/UserProfileSideContent/UserPro
 import ViewUserProfile from './UserProfile/ViewUserProfile/ViewUserProfile'
 import EditUserProfile from './UserProfile/EditUserProfile/EditUserProfile'
 import EditUserProfileImage from './UserProfile/EditUserProfileImage/EditUserProfileImage'
-import EditUserLogin from './UserProfile/EditUserLogin/EditUserLogin'
-import EditUserPassword from './UserProfile/EditUserPassword/EditUserPassword'
+import EditUserUsername from './UserProfile/EditUserUsername/EditUserUsername'
+import EditUserEmailAddress from './UserProfile/EditUserEmailAddress/EditUserEmailAddress'
 import VendorToolTip from './VendorToolTip/VendorToolTip'
 import CreateUserStoreMainContent from './StoreProfile/CreateUserStoreMainContent/CreateUserStoreMainContent'
 import CreateUserStoreSideContent from './StoreProfile/CreateUserStoreSideContent/CreateUserStoreSideContent'
 import UserStoreMainContent from './StoreProfile/UserStoreMainContent/UserStoreMainContent'
 import UserStoreSideContent from './StoreProfile/UserStoreSideContent/UserStoreSideContent'
-import ViewUserStore from './StoreProfile/ViewUserStore/ViewUserStore'
+import EditUserSingleStoreMainContent from './StoreProfile/EditUserSingleStoreMainContent/EditUserSingleStoreMainContent'
+import EditUserSingleStoreSideContent from './StoreProfile/EditUserSingleStoreSideContent/EditUserSingleStoreSideContent'
 import EditUserStore from './StoreProfile/EditUserStore/EditUserStore'
+import EditUserStoreName from './StoreProfile/EditUserStoreName/EditUserStoreName'
 import EditUserStoreImage from './StoreProfile/EditUserStoreImage/EditUserStoreImage'
-import EditUserStoreCoverImage from './StoreProfile/EditUserStoreCoverImage/EditUserStoreCoverImage'
+import EditUserStoreCoverImageMainContent from './StoreProfile/EditUserStoreCoverImageMainContent/EditUserStoreCoverImageMainContent'
+import EditUserStoreCoverImageSideContent from './StoreProfile/EditUserStoreCoverImageSideContent/EditUserStoreCoverImageSideContent'
+import ViewUserPostProfile from './Posts/ViewUserPostProfile/ViewUserPostProfile'
+import EditPost from './Posts/EditPost/EditPost'
+import EditPostImage from './Posts/EditPostImage/EditPostImage'
+import EditPostSelectedImages from './Posts/EditPostSelectedImages/EditPostSelectedImages'
 import SearchPostsMainContent from './Search/SearchPostsMainContent/SearchPostsMainContent';
 import SearchPostsSideContent from './Search/SearchPostsSideContent/SearchPostsSideContent';
 import SearchStoresMainContent from './Search/SearchStoresMainContent/SearchStoresMainContent';
 import SearchStoresSideContent from './Search/SearchStoresSideContent/SearchStoresSideContent';
+import ViewUserSingleStore from './StoreProfile/ViewUserSingleStore/ViewUserSingleStore'
+import ViewUserStoreMainContent from './StoreProfile/ViewUserStoreMainContent/ViewUserStoreMainContent'
+import ViewUserStoreSideContent from './StoreProfile/ViewUserStoreSideContent/ViewUserStoreSideContent'
 import Footer from "./Footer/Footer"
 import BackToTop from "./BackToTop/BackToTop"
 
-export{
+export{    
     Name,
     Navbar,
     Button,
@@ -86,7 +101,10 @@ export{
     ToggleModeButton,
     TruncatedText,
     PleaseNote,
+    SubHeaders,
     BreadCrumbs,
+    ContactForm,
+    ContactAddressInfo,
     SearchHeader,
     ProductDisplay,
     SimilarPosts,
@@ -101,6 +119,8 @@ export{
     ItemQuantityToggle,
     WishlistToggle,
     CartItems,
+    CheckoutMainContent,
+    CheckoutSideContent,
     Hero,
     AboutUs,
     Features,
@@ -126,21 +146,31 @@ export{
     ViewUserProfile,
     EditUserProfile,
     EditUserProfileImage,
-    EditUserLogin,
-    EditUserPassword,
+    EditUserUsername,
+    EditUserEmailAddress,
     VendorToolTip,
     CreateUserStoreMainContent,
     CreateUserStoreSideContent,
     UserStoreMainContent,
     UserStoreSideContent,
-    ViewUserStore,
     EditUserStore,
+    EditUserStoreName,
     EditUserStoreImage,
-    EditUserStoreCoverImage,
+    EditUserStoreCoverImageMainContent,
+    EditUserStoreCoverImageSideContent,
+    EditUserSingleStoreMainContent,
+    EditUserSingleStoreSideContent,
+    ViewUserPostProfile,
+    EditPost,
+    EditPostImage,
+    EditPostSelectedImages,
     SearchPostsMainContent,
     SearchPostsSideContent,
     SearchStoresMainContent,
     SearchStoresSideContent,
+    ViewUserSingleStore,
+    ViewUserStoreMainContent,
+    ViewUserStoreSideContent,
     Footer,
     BackToTop,
 }

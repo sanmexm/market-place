@@ -28,7 +28,7 @@ const SubmitPopUp = ({onOpen, onClose, onConfirm, popUpImage, prompt}) => {
                   </div>
 
                   <div className='submit-popup-card-button'>
-                    <Button buttonClickWrap="link-wrapper" onClickButton onClickNavigate={onConfirm} onClickName="Create"/>
+                    <Button buttonClickWrap="link-wrapper" onClickButton onClickNavigate={onConfirm} onClickName="Submit"/>
                     <Button buttonClickWrap="transparent-link-wrapper" onClickButton onClickNavigate={onClose} onClickName="Cancel"/>
                   </div>
                 </div>

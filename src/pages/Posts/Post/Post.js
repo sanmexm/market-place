@@ -11,8 +11,6 @@ const Post = () => {
   const dispatch              = useDispatch()
   const { id }                = useParams()
   const {singlePost}          = useSelector((state) => state.postList)
-  const {isLoading, actualRate, totalRate, ratingSum} = useSelector((state) => state.postRatingList)
-  
   const [onePost, setOnePost] = useState(null);
   const page                  = 1
 

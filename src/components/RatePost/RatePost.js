@@ -1,38 +1,43 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { StarRateRoundedIcon } from '../../utils/constants'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { actionUpdatePostRating } from '../../actions/postRatings'
 import { Button, Loader, LoginModal, LoginPopUp, RatePostDataResponse } from '../'
+import { actionFetchProfiles } from '../../actions/profiles'
+import { useLocation } from 'react-router-dom'
+
 import './ratePost.css'
+import toast from 'react-hot-toast'
 
 const RatePost = ({ postId, count, rating, onRating }) => {
     const [authData, setAuthData]                 = useState(JSON.parse(localStorage.getItem('authData')));
     const [userId, setUserId]                     = useState(authData?.result?._id);
     const [loginModalPopUp, setLoginModalPopUp]   = useState(authData)
     const dispatch                                = useDispatch();
+    const location                                = useLocation();
+    const searchParams                            = new URLSearchParams(location.search);
+    const page                                    = searchParams.get("page") || 1
+    const { getAllProfiles }                      = useSelector((state) => state.profileList)
     const [postData, setPostData]                 = useState({star: 0})
-    const [rateMessage, setRateMessage]           = useState(false);
     const [savingInfo, setSavingInfo]             = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [hoveredRating, setHoveredRating]       = useState(0);
     const [responseData, setResponseData]         = useState(null);
+    const [errorMessage, setErrorMessage]         = useState(null);
     const [loginPopUpOpen, setLoginPopUpOpen]     = useState(false);
     
     const handleLoginAccountCancel = () => {
       setLoginPopUpOpen(false);
     };
 
-    const handleModalLoginAccount = () => {
-      setLoginModalPopUp(true)
-      // onCancel()
-    }
+    useEffect(() => {
+      dispatch(actionFetchProfiles(page))
+    }, [page, dispatch])
 
-    // useEffect(() => {
-    //   if (authData) {
-    //     onSuccessLogin(); // Call onSuccessLogin when authData is updated
-    //   }
-    // }, [authData, onSuccessLogin]);
+    const handleModalLoginAccount = () => {
+      setLoginModalPopUp((prev) => !prev)
+    }
 
     useEffect(() => {
       const newAuthData = JSON.parse(localStorage.getItem('authData'));
@@ -41,13 +46,6 @@ const RatePost = ({ postId, count, rating, onRating }) => {
         setUserId(newAuthData?.result?._id);
       }
     }, [loginPopUpOpen]);
-
-    // const handleSuccessLogin = () => {
-    //   // Update authData state immediately after successful login
-    //   setAuthData(JSON.parse(localStorage.getItem('authData')));
-    //   // Close the login popup
-    //   setLoginModalPopUp(false);
-    // };
 
     const handleSuccessLogin = () => {
       const storedAuthData = JSON.parse(localStorage.getItem('authData'));
@@ -62,24 +60,26 @@ const RatePost = ({ postId, count, rating, onRating }) => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      setRateMessage(false);
-      setSavingInfo(true);
-      setIsButtonDisabled(true); // Disable button on submission
-      // console.log(postId, userId, postData)
-      setIsButtonDisabled(false);
-      try {
-        setRateMessage(true);
-        const response = await dispatch(actionUpdatePostRating(postId, userId, postData));
-        setResponseData(response);
-        setTimeout(() => {
-          setRateMessage(null);
-        }, 10000);
-        setSavingInfo(false);
-        setIsButtonDisabled(false); // Enable button after successful submission
-      } catch (error) {
-        console.error(error);
-        setSavingInfo(false);
-        setIsButtonDisabled(false); // Enable button if submission fails
+      if(Array.isArray(getAllProfiles) && getAllProfiles.find(profile => profile.userId === userId)){
+        setSavingInfo(true);
+        setIsButtonDisabled(true);
+        try {
+          const response = await dispatch(actionUpdatePostRating(postId, userId, postData));
+          setResponseData(response);
+          toast.success("Rating submitted successfully")
+          setSavingInfo(false);
+          setIsButtonDisabled(false); // Enable button after successful submission
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000);
+        } catch (error) {
+          console.error(error);
+          setSavingInfo(false);
+          setIsButtonDisabled(false); // Enable button if submission fails
+        }
+      }else{
+        setErrorMessage("Please set up your profile before posting a review")
+        setLoginPopUpOpen(false);
       }
     };
 
@@ -122,13 +122,12 @@ const RatePost = ({ postId, count, rating, onRating }) => {
               />
             )
           )}
-          {rateMessage && (<p>your rating has been submitted</p>)}
         </form>
+        {errorMessage && <p className='error-msg'>{errorMessage}</p>}
         <LoginPopUp isOpen={loginPopUpOpen} onCancel={handleLoginAccountCancel} onSuccessLogin={handleSuccessLogin} handleModalLoginAccount={handleModalLoginAccount}  />
-        <RatePostDataResponse responseData={responseData} postId={postId} />
+        {/* <RatePostDataResponse responseData={responseData} postId={postId} /> */}
       </div>
       {!authData && loginModalPopUp && <LoginModal onSuccessLogin={handleSuccessLogin} />}
-      {/* <LoginPopUp /> */}
     </>
   )
 }

@@ -145,7 +145,33 @@ const usersValidateEmailAddress = (postData, getAllUsers) => {
     return { isValid, errors };
 }
 
-const usersValidateState = (postData) => {
+const usersValidateCategory = (postData) => {
+    const errors = [];
+    let isValid  = true;
+    if (postData === '') {
+        errors.push('');
+        isValid = true;
+    } else if(!postData){
+        errors.push('Please select a category');
+        isValid = false;
+    }
+    return { isValid, errors };
+}
+
+const usersValidateCountry = (postData) => {
+    const errors = [];
+    let isValid  = true;
+    if (postData === '') {
+        errors.push('');
+        isValid = true;
+    } else if(!postData){
+        errors.push('Please select your country');
+        isValid = false;
+    }
+    return { isValid, errors };
+}
+
+const usersValidateCountryState = (postData) => {
     const errors = [];
     let isValid  = true;
     if (postData === '') {
@@ -198,7 +224,9 @@ export {
     usersValidatePrimaryPhone,
     usersValidateUsername,
     usersValidateEmailAddress,
-    usersValidateState,
+    usersValidateCategory,
+    usersValidateCountry,
+    usersValidateCountryState,
     usersValidatePassword,
     usersValidateConfirmPassword,
 }

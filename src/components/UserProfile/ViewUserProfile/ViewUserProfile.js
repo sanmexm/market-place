@@ -1,8 +1,9 @@
 import React from 'react'
+import moment from 'moment'
 
 import './viewUserProfile.css'
 
-const ViewUserProfile = ({authData}) => {
+const ViewUserProfile = ({userData, userProfileData}) => {
 
   return (
     <>
@@ -16,7 +17,7 @@ const ViewUserProfile = ({authData}) => {
             first name:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.firstName}
+            {userData?.firstName}
           </div>
         </div>
 
@@ -25,7 +26,7 @@ const ViewUserProfile = ({authData}) => {
             middle name:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.middleName}
+            {userData?.middleName}
           </div>
         </div>
         
@@ -34,7 +35,7 @@ const ViewUserProfile = ({authData}) => {
             last name:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.lastName}
+            {userData?.lastName}
           </div>
         </div>
 
@@ -43,7 +44,8 @@ const ViewUserProfile = ({authData}) => {
             date of birth:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.dateOfBirth}
+            {userProfileData?.dateOfBirth}
+            
           </div>
         </div>
 
@@ -52,7 +54,7 @@ const ViewUserProfile = ({authData}) => {
             sex:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.sex}
+            {userProfileData?.sex}
           </div>
         </div>
 
@@ -61,34 +63,16 @@ const ViewUserProfile = ({authData}) => {
             primary Phone:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.primaryPhone}
+            {userProfileData?.primaryPhone}
           </div>
         </div>
 
-        <div className='view-profile-body-details-wrapper'>
-          <div className='view-profile-details-title'>
-            secondary Phone:
-          </div>
-          <div className='view-profile-details-main'>
-            {authData?.result?.secondaryPhone}
-          </div>
-        </div>
-
-        <div className='view-profile-body-details-wrapper'>
-          <div className='view-profile-details-title'>
-            profession:
-          </div>
-          <div className='view-profile-details-main'>
-            {authData?.result?.profession}
-          </div>
-        </div>
-        
         <div className='view-profile-body-details-wrapper'>
           <div className='view-profile-details-title'>
             Email Address:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.emailAddress}
+            {userData?.emailAddress}
           </div>
         </div>
 
@@ -97,52 +81,52 @@ const ViewUserProfile = ({authData}) => {
             Username:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.username}
+            {userData?.username}
           </div>
         </div>
 
         <div className='view-profile-body-details-wrapper'>
           <div className='view-profile-details-title'>
-            street address:
+            category:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.streetAddress}
+            {userProfileData?.category}
           </div>
         </div>
 
         <div className='view-profile-body-details-wrapper'>
           <div className='view-profile-details-title'>
-            apartment number:
+            location:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.apartmentNumber}
+            {userProfileData?.location}
           </div>
         </div>
 
         <div className='view-profile-body-details-wrapper'>
           <div className='view-profile-details-title'>
-            city:
+            verification status:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.city}
+            {userProfileData?.verification === true ? 'verified' : 'unverified'}
           </div>
         </div>
 
         <div className='view-profile-body-details-wrapper'>
           <div className='view-profile-details-title'>
-            state:
+            created:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.state}
+            {moment(userProfileData.createdAt).format('YYYY-MM-DD H:s:m')} 
           </div>
         </div>
 
         <div className='view-profile-body-details-wrapper'>
           <div className='view-profile-details-title'>
-            zip code:
+            updated:
           </div>
           <div className='view-profile-details-main'>
-            {authData?.result?.zipCode}
+            {moment(userProfileData.updatedAt).format('YYYY-MM-DD H:s:m')} 
           </div>
         </div>
       </div>

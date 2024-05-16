@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import './button.css'
 
-const Button = ({ buttonWrapper, buttonClasses, onClickButton, linkButton, hrefHashTagButton, buttonClickWrap, onClickNavigate, isButtonDisabled, buttonIconBack, onClickName, buttonIcon, linkTo, linkClass, linkName, linkIcon, title}) => {
+const Button = ({buttonWrapper, buttonClasses, onClickButton, linkButton, hrefHashTagButton, buttonClickWrap, onClickNavigate, isButtonDisabled, buttonIconBack, onClickName, buttonIcon, linkTo, linkClass, linkName, linkIcon, title}) => {
   
   const classNames = buttonClasses ? buttonClasses.join(' ') : '';
     

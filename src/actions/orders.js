@@ -24,6 +24,48 @@ export const actionFetchOrders = (page) => async(dispatch) => {
     }
 }
 
+export const actionCreateOrder = (shippingInfo, cartItems, cartTotal) => async(dispatch) => {
+    try{
+        dispatch({ type: startLoading.type })
+        const { data } = await api.createOrder(shippingInfo, cartItems, cartTotal)
+        dispatch({
+            type: setOrders.type,
+            payload: data
+        })
+        dispatch({ type: endLoading.type })
+        return data
+    }catch(error){
+        console.log(error)
+        if (error.response) {
+            return error.response; // Return the error response object
+        } else {
+            console.log("Error details:", error.message);
+            throw error; // Re-throw the error to be caught in the handleSubmit function
+        }
+    }
+}
+
+export const actionUpdatePaymentOrder = (id, result) => async(dispatch) => {
+    try{  
+        dispatch({ type: startLoading.type })
+        const { data } = await api.updatePaymentOrder(id, result)
+        dispatch({
+            type: setOrders.type,
+            payload: data
+        })
+        dispatch({ type: endLoading.type })
+        return data
+    }catch(error){
+        console.log(error)
+        if (error.response) {
+            return error.response; // Return the error response object
+        } else {
+            console.log("Error details:", error.message);
+            throw error; // Re-throw the error to be caught in the handleSubmit function
+        }
+    }
+}
+
 export const actionFetchOrdersBySearch = (searchQuery, page) => async(dispatch) => {
     try{
         dispatch({ type: startLoading.type })

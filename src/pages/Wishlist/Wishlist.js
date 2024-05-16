@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, ItemQuantityToggle, Loader, Name } from '../../components'
-import { AddShoppingCartRoundedIcon, RemoveRoundedIcon } from '../../utils/constants'
-import { actionAddToCart } from '../../actions/cart'
+import { Button, Loader, Name } from '../../components'
+import { RemoveRoundedIcon } from '../../utils/constants'
 import { Link } from 'react-router-dom'
 import { actionRemoveWishList } from '../../actions/wishlist'
 import { heart } from '../../assets'
@@ -12,20 +11,10 @@ import './wishlist.css'
 
 const Wishlist = () => {
     const dispatch                       = useDispatch();
-    const {isLoading, getCartItems }     = useSelector((state) => state?.cartList)
     const { getWishlistItems }           = useSelector((state) => state?.wishlistList)
-    const [quantity, setQuantity]        = useState(getCartItems.length > 0 ? getCartItems.map((item) => item?.product?.quantity) : 1);  
 
-    const handleAddToCart = async(product) => {
-        //cart items coming from products
-        // console.log(quantity)
-        const response = await dispatch(actionAddToCart({product, quantity: Number(quantity)}))
-        //you can decide to navigate to cart page if you want
-        toast.success('Item has been added to cart')
-    }
-
-    const handleRemoveWishList = async(wishlist) => {
-        const response = await dispatch(actionRemoveWishList(wishlist))
+    const handleRemoveWishList = async(item) => {
+        dispatch(actionRemoveWishList(item))
         toast.success('Item has been removed')
     }
 
@@ -33,25 +22,21 @@ const Wishlist = () => {
     <>
         <div className='wishlist-wrapper'>
             {(getWishlistItems?.length > 0) ? (
-                getWishlistItems.map((item, index) => (
-                    <div  key={index} className='wishlist-details-wrapper'>
+                getWishlistItems.map((result) => (
+                    <div key={result._id} className='wishlist-details-wrapper'>
                         <div className='wishlist-details'>
-                            <Link to={`../posts/post/${item._id}`} className='wishlist-details-image'>
-                                <img src={item?.selectedFile} alt='item logo' />
+                            <Link to={`../posts/post/${result._id}`} className='wishlist-details-image'>
+                                <img src={result?.selectedFile} alt='item logo' />
                             </Link>
                             <div className='wishlist-details-title-price'>
-                                <span>{item.title}</span>
-                                <small>&#8358;{item.price}</small>
+                                <span>{result.title}</span>
+                                <small>&#8358;{result.price}</small>
                             </div>
                         </div>
                         <div className='wishlist-details-btn'>
-                            <Button onClickButton buttonClickWrap="wide-cart-button-click" buttonIcon={<RemoveRoundedIcon />} onClickNavigate={() => handleRemoveWishList(item)} onClickName="Remove from wishlist" />
-    
-                            {getCartItems?.length > 0 ? 
-                                (<ItemQuantityToggle quantity={quantity} setQuantity={setQuantity} />) 
-                                :
-                                <Button onClickButton buttonClickWrap="wide-cart-button-click" buttonIcon={<AddShoppingCartRoundedIcon />} onClickNavigate={() => handleAddToCart(item)} onClickName="Add To Cart" />
-                            }
+                            <Button onClickButton buttonClickWrap="wide-cart-button-click" buttonIcon={<RemoveRoundedIcon />} onClickNavigate={() => handleRemoveWishList(result)} onClickName="Remove from wishlist" />
+
+                            
                         </div>
                     </div>
                 ))

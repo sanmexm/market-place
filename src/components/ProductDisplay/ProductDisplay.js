@@ -18,6 +18,7 @@ import './productDisplay.css'
 const ProductDisplay = ({ userId, postId, product, isLoading }) => {
     const dispatch                                    = useDispatch();
     const {getCartItems }                             = useSelector((state) => state?.cartList)
+    const {getUsersPostRatings}                       = useSelector((state) => state.postRatingList)
     const { singleUser }                              = useSelector((state) => state.userList)
     const { singleUserProfile }                       = useSelector((state) => state.profileList)
     const [selectedImage, setSelectedImage]           = useState("");
@@ -25,10 +26,53 @@ const ProductDisplay = ({ userId, postId, product, isLoading }) => {
     const [rating, setRating]                         = useState(0);
     const lineRef                                     = useRef(null);
     const [activeTab, setActiveTab]                   = useState(0);
-    const [quantity, setQuantity]                     = useState(getCartItems.length > 0 ? getCartItems.map((item) => item?.product?.quantity) : 1);    
-    const tabButtons                                  = ['Description', 'Reviews', 'Verified Ratings (3422)'];
+    const [quantity, setQuantity]                     = useState(getCartItems.length > 0 ? getCartItems.map((item) => item?.quantity) : 1);
+
+    const tabButtons                                  = ['Description', 'Reviews', `Verified Ratings (${getUsersPostRatings.length})`];
     const [percentageDifference, setPercentageDifference] = useState(null);
-    const [isOpen, setIsOpen]                         = useState(false)
+    const [isOpen, setIsOpen]                         = useState(false);
+    
+    useEffect(() => {
+      dispatch(actionFetchUserProfile(userId))
+      dispatch(actionFetchUser(userId))
+    }, [userId, dispatch]);
+
+    useEffect(() => {
+      
+    }, [singleUser, singleUserProfile])
+    
+    useEffect(() => {
+      if (product && product.oldPrice !== undefined && product.price !== undefined) {
+        if (product.oldPrice !== 0) {
+          const difference = ((product.price - product.oldPrice) / product.oldPrice) * 100;
+          setPercentageDifference(difference);
+        } else {
+          setPercentageDifference(null);
+        }
+      } else {
+        setPercentageDifference(null); // Reset to null if product or necessary properties are not defined
+      }
+    }, [product]);
+
+    // Listen for window resize to update dynamic main bullets
+
+    useEffect(() => {
+      updateDynamicMainBullets();
+      window.addEventListener('resize', updateDynamicMainBullets);
+      return () => {
+        window.removeEventListener('resize', updateDynamicMainBullets);
+      };
+    }, []);
+
+    useEffect(() => {
+      if (lineRef.current) {
+        const activeButton = lineRef.current.parentNode.querySelector('.active');
+        if (activeButton) {
+          lineRef.current.style.width = `${activeButton.offsetWidth}px`;
+          lineRef.current.style.left = `${activeButton.offsetLeft}px`;
+        }
+      }
+    }, [activeTab]);
     
     const handleTabClick = (index) => {
       setActiveTab(index);
@@ -37,11 +81,10 @@ const ProductDisplay = ({ userId, postId, product, isLoading }) => {
     const handleContactClick = () => {
       setIsOpen((prev) => !prev)
     }
-
-    const handleAddToCart = async(product) => {
+    
+    const handleAddToCart = async(item) => {
       //cart products coming from products
-      // console.log(quantity)
-      await dispatch(actionAddToCart({product, quantity: Number(quantity)}))
+      await dispatch(actionAddToCart({item, quantity: Number(quantity)}))
       //you can decide to navigate to cart page if you want
       toast.success('Item has been added to cart')
     }
@@ -97,42 +140,6 @@ const ProductDisplay = ({ userId, postId, product, isLoading }) => {
       }
     };
 
-    useEffect(() => {
-      dispatch(actionFetchUserProfile(userId))
-      dispatch(actionFetchUser(userId))
-    }, [userId, dispatch]);
-    
-    useEffect(() => {
-      if (product && product.oldPrice !== undefined && product.price !== undefined) {
-        if (product.oldPrice !== 0) {
-          const difference = ((product.price - product.oldPrice) / product.oldPrice) * 100;
-          setPercentageDifference(difference);
-        } else {
-          setPercentageDifference(null);
-        }
-      } else {
-        setPercentageDifference(null); // Reset to null if product or necessary properties are not defined
-      }
-    }, [product]);
-    // Listen for window resize to update dynamic main bullets
-    useEffect(() => {
-      updateDynamicMainBullets();
-      window.addEventListener('resize', updateDynamicMainBullets);
-      return () => {
-        window.removeEventListener('resize', updateDynamicMainBullets);
-      };
-    }, []);
-
-    useEffect(() => {
-      if (lineRef.current) {
-        const activeButton = lineRef.current.parentNode.querySelector('.active');
-        if (activeButton) {
-          lineRef.current.style.width = `${activeButton.offsetWidth}px`;
-          lineRef.current.style.left = `${activeButton.offsetLeft}px`;
-        }
-      }
-    }, [activeTab]);
-
   return (
     <>
       {product ? (
@@ -184,42 +191,66 @@ const ProductDisplay = ({ userId, postId, product, isLoading }) => {
               <div className='post-display-description'>{product?.description}</div>
 
               {product.postType === 'item' ? ( 
-                  isLoading ? (
-                      <Loader />
-                  ) : getCartItems?.length > 0 ? (
-                      <ItemQuantityToggle quantity={quantity} setQuantity={setQuantity} />
-                  ) : ( 
-                      <Button 
-                          onClickButton 
-                          buttonClickWrap="wide-cart-button-click" 
-                          buttonIcon={<AddShoppingCartRoundedIcon />} 
-                          onClickNavigate={() => handleAddToCart(product)} 
-                          onClickName="Add To Cart" 
-                      />
+                isLoading ? (
+                  <Loader />
+                  ) : (
+                    <>
+                      {getCartItems && getCartItems.length > 0 ? (
+                        getCartItems.some((result) => result.item?._id === product._id) ? (
+                          // If any item in getCartItems matches the current product ID, display ItemQuantityToggle
+                          getCartItems.map((result) => {
+                            if (result.item?._id === product._id) {
+                              return (
+                                <ItemQuantityToggle key={result?.item?._id} quantity={result?.quantity} setQuantity={setQuantity} item={result.item} />
+                              );
+                            }
+                            return null;
+                          })
+                        ) : (
+                          // If no item in getCartItems matches the current product ID, display the Add to Cart button
+                          <Button
+                            onClickButton
+                            buttonClickWrap="wide-cart-button-click"
+                            buttonIcon={<AddShoppingCartRoundedIcon />}
+                            onClickNavigate={() => handleAddToCart(product)}
+                            onClickName="Add To Cart"
+                          />
+                        )
+                      ) : (
+                        // If getCartItems is empty or null, display the Add to Cart button
+                        <Button
+                          onClickButton
+                          buttonClickWrap="wide-cart-button-click"
+                          buttonIcon={<AddShoppingCartRoundedIcon />}
+                          onClickNavigate={() => handleAddToCart(product)}
+                          onClickName="Add To Cart"
+                        />
+                      )}
+                    </>
                   )
-              ) : (
-                <div className="contact-seller-message">
-                  <Button buttonWrapper="button-wrapper" onClickButton buttonClickWrap="button-click-wrap" onClickNavigate={handleContactClick} onClickName="contact service provider" />
+                ) : (
+                  <div className="contact-seller-message">
+                    <Button buttonWrapper="button-wrapper" onClickButton buttonClickWrap="button-click-wrap" onClickNavigate={handleContactClick} onClickName="contact service provider" />
 
-                  <div className={isOpen ? 'contact-seller-menu-option active' : 'contact-seller-menu-option'}>
-                    <Link to="/login" className='contact-seller-menu-detail contact-seller-menu-detail-bottom-divider' onClick={handleContactClick}>
-                      <span>Whatsapp</span>
-                    </Link>
-                    <Link to="/register" className='contact-seller-menu-detail contact-seller-menu-detail-bottom-divider' onClick={handleContactClick}>
-                      <span>Email Address</span>
-                    </Link>
-                    <Link to="/register" className='contact-seller-menu-detail' onClick={handleContactClick}>
-                      <span>Phone number:</span>
-                    </Link>
+                    <div className={isOpen ? 'contact-seller-menu-option active' : 'contact-seller-menu-option'}>
+                      <Link to="/login" className='contact-seller-menu-detail contact-seller-menu-detail-bottom-divider' onClick={handleContactClick}>
+                        <span>Whatsapp</span>
+                      </Link>
+                      <Link to="/register" className='contact-seller-menu-detail contact-seller-menu-detail-bottom-divider' onClick={handleContactClick}>
+                        <span>Email Address</span>
+                      </Link>
+                      <Link to="/register" className='contact-seller-menu-detail' onClick={handleContactClick}>
+                        <span>Phone number:</span>
+                      </Link>
+                    </div>
                   </div>
-                </div>
               )}
 
               <div className='post-display-category'>
                 <span>Category: {product?.category}</span>
                 <span>Tags: {product?.tag}</span>
               </div>
-              <VendorToolTip vendorProfile={singleUserProfile} vendorUser={singleUser} />
+              <VendorToolTip isLoading={isLoading} vendorProfile={singleUserProfile} vendorUser={singleUser} />
             </div>
           </div>
 
@@ -242,7 +273,7 @@ const ProductDisplay = ({ userId, postId, product, isLoading }) => {
                   <PostReviews postId={postId} />
                 </div>
                 <div className={`navigator-content ${activeTab === 2 && 'active'}`}>
-                  <PostRatings postId={postId} />
+                  <PostRatings postId={postId} getUsersPostRatings={getUsersPostRatings} isLoading={isLoading} />
                 </div>
               </div>
             </div>

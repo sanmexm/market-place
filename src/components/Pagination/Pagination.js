@@ -7,10 +7,10 @@ import { PaginationItem } from '@mui/material';
 
 import './pagination.css'
 
-const Paginate = ({ id, page, actionGet, numberOfPages, totalNumber }) => {
+const Paginate = ({ id, page, pageName, actionGet, numberOfPages, totalNumber }) => {
   const dispatch             = useDispatch()
-  const location             = useLocation();
-  const { pathname, search } = location;
+  // const location             = useLocation();
+  // const { pathname, search } = location;
 
   useEffect(() => {
     if(page) dispatch(actionGet(id, page))
@@ -26,8 +26,10 @@ const Paginate = ({ id, page, actionGet, numberOfPages, totalNumber }) => {
           color='primary'
           page={Number(page) || 1}
           renderItem={(item) => (
-            <PaginationItem { ...item } component={Link} to={`${pathname}${search}&page=${item.page}`} />
-            // <PaginationItem { ...item } component="a" href={`/${pageName}?page=${item.page}`} />
+            <PaginationItem { ...item } component={Link} to={`/${pageName}?page=${item.page}`} />
+            // <PaginationItem { ...item } component="a" href={`/${pathname}${search}?page=${item.page}`} />
+            // <PaginationItem { ...item } component={Link} to={`${pathname}${search}?page=${item.page}`} />
+            // <PaginationItem { ...item } component={Link} to={`${pathname}${search ? search + '&' : '?'}page=${item.page}`}  />
           )}
         />
         <span>{totalNumber} results found</span>

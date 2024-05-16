@@ -22,7 +22,7 @@ const profileValidatePrimaryPhone = (postData) => {
       errors.push('Invalid primary phone, Phone format must - 044-456-7890');
       isValid = false;
     }else if(postData.includes(" ")) {
-      errors.push('primary cannot have spaces');
+      errors.push('Phone Number cannot have spaces');
       isValid = false;
     }
     return { isValid, errors };

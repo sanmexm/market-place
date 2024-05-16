@@ -1,7 +1,7 @@
 import React from 'react'
-
 import {Button} from '../..'
 import { logo } from '../../../assets'
+
 import './aboutUs.css'
 
 const AboutUs = () => {

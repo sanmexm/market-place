@@ -1,0 +1,28 @@
+.terms-section-wrapper{
+    width: 100%;
+    min-height: 100vh;
+}
+.terms-section-container{
+
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

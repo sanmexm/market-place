@@ -106,6 +106,7 @@ const Login = () => {
     const handleSubmit = async(e) => {
     e.preventDefault();
       setSavingInfo(true);
+      setIsButtonDisabled(true)
       const response = await dispatch(actionSignin(postData, location))
       if(response?.status === 400 || response?.status === 404){
         setErrorMessage(response.data.message)
@@ -144,7 +145,7 @@ const Login = () => {
             )}
             {isRegistered && (
               <div className="registration-success-message">
-                <p className="success-msg">Your registration was successful. Please check your email to verify your account.</p>
+                <p className="success-msg">Please check your email to verify your account.</p>
               </div>
             )}
           </div>

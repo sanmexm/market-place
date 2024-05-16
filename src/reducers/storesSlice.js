@@ -9,6 +9,8 @@ const initialState = {
     currentPage: 1,
     numberOfPages: 0,
     totalNumber: 0,
+    getStoreItemsById: null,
+    singleUserStore: null,
     singleStore: null,
     updateStore: null,
     deleteStore: null,
@@ -30,11 +32,23 @@ const storesSlice = createSlice({
             state.numberOfPages       = action.payload.numberOfPages;
             state.totalNumber         = action.payload.totalNumber;
         },
+        setStoreItemsById: (state, action) => {
+            state.getStoreItemsById      = action.payload;
+        },
+        // setStoreItemsByStoreId: (state, action) => {
+        //     state.getPostsByStoreId   = action.payload.data
+        //     state.currentPage         = action.payload.currentPage
+        //     state.numberOfPages       = action.payload.numberOfPages
+        //     state.totalNumber         = action.payload.totalNumber
+        // },
         setStoresByUser: (state, action) => {
             state.getStoresByUser     = action.payload.data
             state.currentPage         = action.payload.currentPage
             state.numberOfPages       = action.payload.numberOfPages
             state.totalNumber         = action.payload.totalNumber
+        },
+        setSingleUserStore: (state, action) => {
+            state.singleUserStore      = action.payload;
         },
         setSingleStore: (state, action) => {
             state.singleStore          = action.payload;
@@ -56,5 +70,5 @@ const storesSlice = createSlice({
     }
 });
 
-export const { startLoading, endLoading, setStores, setStoresByUser, setSingleStore, setStoresSearch, setUpdateStore, setDeleteStore } = storesSlice.actions
+export const { startLoading, endLoading, setStores, setStoreItemsById, setStoresByUser, setSingleUserStore, setSingleStore, setStoresSearch, setUpdateStore, setDeleteStore } = storesSlice.actions
 export default storesSlice.reducer

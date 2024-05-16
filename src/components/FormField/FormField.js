@@ -2,7 +2,7 @@ import React from 'react';
 import { CloudUploadRoundedIcon, KeyboardArrowDownRoundedIcon } from '../../utils/constants';
 import './formField.css'
 
-const FormField = ({isLoadingBtn, isValid, inputTypeHidden, labelBoolean, labelName, labelTitle, name, id, accept, type, value, handleChange, handleBlur, inputType, selectMenu, fileInputType, placeholder, multipleFileInputType, selectType, textareaType, readOnly, maxLength, fullNameOption, valueOptionId, radioType, htmlFor, errors, options=[],   data, dropdownState, onClick, menuClick, menuOption}) => {
+const FormField = ({isLoadingBtn, isValid, inputTypeHidden, labelBoolean, labelName, labelTitle, name, id, accept, type, value, handleChange, handleBlur, inputType, selectMenu, fileInputType, placeholder, multipleFileInputType, selectType, textareaType, readOnly, maxLength, fullNameOption, valueOptionId, radioType, htmlFor, errors, options=[], min, max, defaultValue, data, dropdownState, onClick, menuClick, menuOption}) => {
 
   return (
     <>
@@ -20,6 +20,9 @@ const FormField = ({isLoadingBtn, isValid, inputTypeHidden, labelBoolean, labelN
                 className='reg-input'
                 placeholder={placeholder}
                 readOnly={readOnly}
+                min={min}
+                max={max}
+                defaultValue={defaultValue}
                 maxLength={maxLength}
               />
             </>
@@ -72,7 +75,7 @@ const FormField = ({isLoadingBtn, isValid, inputTypeHidden, labelBoolean, labelN
                 {options.map((option, index) => (
                   fullNameOption ? (
                       <option key={index} value={valueOptionId ? option._id : `${option._id}`}>
-                        {option.firstName} {option.lastName}
+                        {option.firstName} {option.lastName} {option.name}
                       </option>
                     ) : (
                       <option key={index} value={option.value}>

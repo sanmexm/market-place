@@ -1,0 +1,40 @@
+.edit-user-store-wrapper{
+    position: relative;
+    padding: 2rem 0;
+    background-color: var(--white);
+    width: 100%;
+}
+#dark .edit-user-store-wrapper{
+    background-color: var(--dark);
+}
+.edit-user-store-form-wrapper{
+    position: relative;
+}
+.edit-user-store-form{
+    position: relative;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 520px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

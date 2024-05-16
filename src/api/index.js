@@ -57,25 +57,29 @@ export const deleteDelivery           = (id) => API.delete(`${delivery}/delete/$
 //orders
 export const fetchOrders           = (page) => API.get(`${orders}?page=${page}`)
 export const fetchOrder            = (id) => API.get(`${orders}/order/${id}`)
-export const createOrders          = (newData) => API.post(`${orders}/create`, newData)
+export const createOrder           = (shippingInfo, cartItems, cartTotal) => API.post(`${orders}/create`, {shippingInfo, cartItems, cartTotal})
+export const updatePaymentOrder    = (id, result) => API.patch(`${orders}/updatePaymentOrder/${id}`, {result})
 export const updateOrder           = (id, updatedData) => API.patch(`${orders}/update/${id}`, updatedData)
 export const fetchOrdersBySearch   = (searchQuery, page) => API.get(`${orders}/search?searchQuery=${searchQuery.search || 'none'}&page=${page}`)
 export const deleteOrder           = (id) => API.delete(`${orders}/delete/${id}`)
 //-------------------------------------------------------------------------------------------------------------------------------
 
 //order trackings
-export const fetchOrderTrackings           = (page) => API.get(`${orderTrackings}?page=${page}`)
-export const fetchOrderTracking            = (id) => API.get(`${orderTrackings}/tracking/${id}`)
-export const createOrderTrackings          = (newData) => API.post(`${orderTrackings}/create`, newData)
-export const updateOrderTracking           = (id, updatedData) => API.patch(`${orderTrackings}/update/${id}`, updatedData)
-export const fetchOrderTrackingsBySearch   = (searchQuery, page) => API.get(`${orderTrackings}/search?searchQuery=${searchQuery.search || 'none'}&page=${page}`)
-export const deleteOrderTracking           = (id) => API.delete(`${orderTrackings}/delete/${id}`)
+export const fetchOrderTrackings         = (page) => API.get(`${orderTrackings}?page=${page}`)
+export const fetchOrderTracking          = (id) => API.get(`${orderTrackings}/tracking/${id}`)
+export const createOrderTrackings        = (newData) => API.post(`${orderTrackings}/create`, newData)
+export const updateOrderTracking         = (id, updatedData) => API.patch(`${orderTrackings}/update/${id}`, updatedData)
+export const fetchOrderTrackingsBySearch = (searchQuery, page) => API.get(`${orderTrackings}/search?searchQuery=${searchQuery.search || 'none'}&page=${page}`)
+export const deleteOrderTracking         = (id) => API.delete(`${orderTrackings}/delete/${id}`)
 //-------------------------------------------------------------------------------------------------------------------------------
 
 //payments
 export const fetchPayments           = (page) => API.get(`${payments}?page=${page}`)
 export const fetchPayment            = (id) => API.get(`${payments}/payment/${id}`)
-export const createPayments          = (newData) => API.post(`${payments}/create`, newData)
+export const createOrderPayment      = (result) => API.post(`${payments}/createPayment`, {result})
+export const firstPaySession         = (referenceId) => API.post(`${payments}/firstPaySession/${referenceId}`)
+export const successPaySession       = (id) => API.get(`${payments}/successPaySession/${id}`)
+export const updatePaymentSession    = (id, result) => API.patch(`${payments}/updatePaymentSession/${id}`, {result})
 export const updatePayment           = (id, updatedData) => API.patch(`${payments}/update/${id}`, updatedData)
 export const fetchPaymentsBySearch   = (searchQuery, page) => API.get(`${payments}/search?searchQuery=${searchQuery.search || 'none'}&page=${page}`)
 export const deletePayment           = (id) => API.delete(`${payments}/delete/${id}`)
@@ -91,6 +95,7 @@ export const deletePostLike           = (id) => API.delete(`${postLikes}/delete/
 
 //postRatings
 export const fetchPostRatings           = (page) => API.get(`${postRatings}?page=${page}`)
+export const fetchUserPostRatings       = (postId, page) => API.get(`${postRatings}/${postId}/usersRatings?page=${page}`)
 export const fetchPostRating            = (postId) => API.get(`${postRatings}/${postId}/viewPostRatings`)
 // export const createPostRatings       = (newData) => API.post(`${postRatings}/create`, newData)
 export const updatePostRating           = (id, userId, updatedData) => API.put(`${postRatings}/${id}/${userId}/userRating`, updatedData)
@@ -119,6 +124,7 @@ export const fetchPostsBySearch    = (searchQuery, page) => API.get(`${posts}/se
 export const fetchSimilarPosts     = (searchQuery) => API.get(`${posts}/similarSearch?searchQuery=${searchQuery.search || 'none'}`)
 export const fetchPost             = (id) => API.get(`${posts}/post/${id}`)
 export const fetchPostsByUser      = (userId, page) => API.get(`${posts}/userPosts/${userId}?page=${page}`)
+export const fetchPostsByStoreId   = (storeId, page) => API.get(`${posts}/storePosts/${storeId}?page=${page}`)
 export const searchUserPosts       = (searchQuery, userId, page) => API.get(`${posts}/${userId}/search?searchQuery=${searchQuery} || 'none'}$page=${page}`)
 export const createPost            = (newPost) => API.post(`${posts}/create`, newPost)
 export const updatePost            = (id, updatedPost) => API.patch(`${posts}/update/${id}`, updatedPost)
@@ -142,9 +148,12 @@ export const deleteProfile            = (id) => API.delete(`${profiles}/delete/$
 //stores
 export const fetchStores            = (page) => API.get(`${stores}?page=${page}`)
 export const fetchStore             = (id) => API.get(`${stores}/${id}`)
+export const fetchUserStore         = (userId) => API.get(`${stores}/store/${userId}`)
+export const fetchUserStoreItems    = (id) => API.get(`${stores}/store/items/${id}`)
+// export const fetchUserStoreItems    = (id, page) => API.get(`${stores}/store/items/${id}?page=${page}`) visiting a user store
 export const createStore            = (newData) => API.post(`${stores}/create`, newData)
 export const updateStore            = (id, updatedData) => API.patch(`${stores}/update/${id}`, updatedData)
-export const fetchStoresByUser      = (user, page) => API.get(`${stores}/userStore/${user}?page=${page}`)
+export const fetchStoresByUser      = (userId, page) => API.get(`${stores}/userStore/${userId}?page=${page}`)
 export const fetchStoresBySearch    = (searchQuery, page) => API.get(`${stores}/search?searchQuery=${searchQuery.search || 'none'}&page=${page}`)
 export const deleteStore            = (id) => API.delete(`${stores}/delete/${id}`)
 //-------------------------------------------------------------------------------------------------------------------------------
@@ -163,6 +172,7 @@ export const fetchUsers            = (page) => API.get(`${users}?page=${page}`)
 export const fetchUser             = (id) => API.get(`${users}/user/${id}`)
 export const createUser            = (newData) => API.post(`${users}/signup`, newData)
 export const updateUser            = (id, updatedData) => API.patch(`${users}/${id}`, updatedData)
+export const updateUserEmailProfile = (id, email) => API.patch(`${users}/update-email-from-profile/${id}`, email)
 export const fetchUsersBySearch    = (searchQuery, page) => API.get(`${users}/search?searchQuery=${searchQuery.search || 'none'}&page=${page}`)
 export const deleteUser            = (id) => API.delete(`${users}/${id}`)
 export const verifyUserRegEmail    = (id, emailToken) => API.get(`${users}/user/${id}/verify/${emailToken}`)
@@ -182,10 +192,10 @@ export const deleteWishlist            = (id) => API.delete(`${wishlists}/delete
 //-------------------------------------------------------------------------------------------------------------------------------
 
 //contact us
-export const createContactUsMessage = (formData) => API.post(`${contactUs}/create`, formData)
-export const fetchContactMessage    = (id) => API.get(`${contactUs}/message/${id}`)
-export const fetchContactMessages   = (page) => API.get(`${contactUs}?page=${page}`)
-export const deleteContactUsMessage = (id) => API.delete(`${contactUs}/delete/${id}`)
+export const createContactUsMessage = (formData) => API.post(`${contactUs}/create`, formData);
+export const fetchContactMessage    = (id) => API.get(`${contactUs}/message/${id}`);
+export const fetchContactMessages   = (page) => API.get(`${contactUs}?page=${page}`);
+export const deleteContactUsMessage = (id) => API.delete(`${contactUs}/delete/${id}`);
 //-------------------------------------------------------------------------------------------------------------------------------
 
 

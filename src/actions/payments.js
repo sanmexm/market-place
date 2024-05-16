@@ -1,5 +1,5 @@
 import * as api from '../api'
-import { startLoading, endLoading, setPayments, setSinglePayment, setPaymentsSearch, setUpdatePayment, setDeletePayment } from '../reducers/paymentsSlice'
+import { startLoading, endLoading, setPayments, setSinglePayment, setPaymentsSearch, setUpdatePayment, setDeletePayment, setSuccessPaymentSession, setFirstPaymentSession } from '../reducers/paymentsSlice'
 //action creators
 // redux thunk allows additional arrow function to a function
 
@@ -9,6 +9,84 @@ export const actionFetchPayments = (page) => async(dispatch) => {
         const { data } = await api.fetchPayments(page)
         dispatch({
             type: setPayments.type,
+            payload: data
+        })
+        dispatch({ type: endLoading.type })
+        return data
+    }catch(error){
+        console.log(error)
+        if (error.response) {
+            return error.response; // Return the error response object
+        } else {
+            console.log("Error details:", error.message);
+            throw error; // Re-throw the error to be caught in the handleSubmit function
+        }
+    }
+}
+
+export const actionCreateOrderPayment = (result) => async(dispatch) => {
+    try{
+        dispatch({ type: startLoading.type })
+        const { data } = await api.createOrderPayment(result)
+        dispatch({
+            type: setPayments.type,
+            payload: data
+        })
+        dispatch({ type: endLoading.type })
+        return data
+    }catch(error){
+        console.log(error)
+        if (error.response) {
+            return error.response; // Return the error response object
+        } else {
+            console.log("Error details:", error.message);
+            throw error; // Re-throw the error to be caught in the handleSubmit function
+        }
+    }
+}
+
+export const actionFirstPaySession = (referenceId) => async(dispatch) => {
+    try{
+        dispatch({ type: startLoading.type })
+        const { data } = await api.firstPaySession(referenceId)
+        dispatch({
+            type: setFirstPaymentSession.type,
+            payload: data
+        })
+        dispatch({ type: endLoading.type })
+        return data
+    }catch(error){
+        console.log(error)
+    }
+}
+
+export const actionSuccessPaySession = (id) => async(dispatch) => {
+    try{
+        dispatch({ type: startLoading.type })
+        const { data } = await api.successPaySession(id)
+        dispatch({
+            type: setSuccessPaymentSession.type,
+            payload: data
+        })
+        dispatch({ type: endLoading.type })
+        return data
+    }catch(error){
+        console.log(error)
+        if (error.response) {
+            return error.response; // Return the error response object
+        } else {
+            console.log("Error details:", error.message);
+            throw error; // Re-throw the error to be caught in the handleSubmit function
+        }
+    }
+}
+
+export const actionUpdatePaymentSession = (id, result) => async(dispatch) => {
+    try{
+        dispatch({ type: startLoading.type })
+        const { data } = await api.updatePaymentSession(id, result)
+        dispatch({
+            type: setSuccessPaymentSession.type,
             payload: data
         })
         dispatch({ type: endLoading.type })

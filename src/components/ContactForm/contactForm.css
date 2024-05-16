@@ -1,0 +1,42 @@
+.contact-reg-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
+    padding: 1rem 2rem;
+    background-color: var(--white);
+}
+.contact-login-container-title{
+    position: relative;
+}
+.contact-login-container-title h3{
+    color: var(--primary-color);
+    font-size: 1.4rem;
+}
+.contact-login-container-title small{
+    font-size: 1.3rem;
+}
+.contact-captcha{
+    margin-bottom: 1.5rem;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

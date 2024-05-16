@@ -16,6 +16,13 @@ const wishlistSlice = createSlice({
         endLoading: (state) => {
             state.isLoading     = false;
         },
+        //both setAddToWishList are correct
+        // setAddToWishList: (state, action) => {
+        //     const newItem = action.payload;
+        //     const updatedWishlist = [...state.getWishlistItems, newItem];
+        //     state.getWishlistItems = updatedWishlist;
+        //     localStorage.setItem('wishlistItems', JSON.stringify(updatedWishlist));
+        // },
         setAddToWishList: (state, action) => {
             let buildWishlistItem = { ...action.payload }
             state.getWishlistItems?.push(buildWishlistItem)

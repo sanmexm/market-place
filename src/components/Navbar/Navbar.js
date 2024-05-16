@@ -117,12 +117,12 @@ const Navbar = ({theme}) => {
   return (
     <>
       <nav className={scrollPosition > 50 ? 'navbar active-scroll' : 'navbar'}>
-        <div className='nav-logo-wrapper'>
+        <Link to="/" className='nav-logo-wrapper'>
           <div className='nav-logo'>
             <img src={logo} alt='site logo' />
           </div>
           <span><Name /></span>
-        </div>
+        </Link>
         
         <div className='navbar-show-btn navbar-open-close' onClick={() => setToggleNav((prev) => !prev)}><MenuRoundedIcon /></div>
 

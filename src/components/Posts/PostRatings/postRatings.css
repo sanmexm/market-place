@@ -1,0 +1,131 @@
+.verified-ratings-wrapper{
+    position: relative;
+    padding: 0 1rem;
+}
+.verified-ratings-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.verified-ratings-header span{
+    font-size: 1.3rem;
+    color: var(--black);
+    font-weight: 700;
+}
+.link-to-ratings{
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+.verified-ratings-body-wrapper{
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+.verified-ratings-level{
+    flex-basis: 20%;
+}
+.verified-ratings-level-title{
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+.verified-ratings-level-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--body-background-color);
+    border-radius: .3rem;
+    padding: 1rem;
+}
+.verified-ratings-level-body span{
+    font-size: 1.4rem;
+}
+.verified-ratings-level-star-body{
+    color: var(--gold);
+    width: 3rem;
+    height: 3rem;
+}
+.verified-ratings-level-star-body svg{
+    width: 100%;
+    height: 100%;
+}
+.verified-ratings-level-body small{
+    font-size: 1.1rem;
+}
+.verified-ratings-count-level-star{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+.verified-ratings-count-level-star span{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: 1.2rem;
+}
+.verified-ratings-count-level-star span svg{
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--gold);
+}
+
+.verified-ratings-users{
+    flex-basis: 80%;
+}
+.verified-ratings-users-title{
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+.verified-ratings-users-body{
+    border-bottom: 1px solid var(--faded-black);
+    padding: 1rem 0;
+}
+.verified-ratings-users-stars span svg{
+    width: 2rem;
+    height: 2rem;
+    color: var(--gold);
+}
+.verified-ratings-users-imgBx{
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    border: 4px solid var(--white);
+}
+.verified-ratings-users-imgBx img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.verified-ratings-user-detail{
+    font-size: 1.3rem;
+}
+.verified-ratings-user-detail small{
+    font-size: 1rem;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 520px){
+    
+}
+
+@media screen and (max-width: 430px){
+    
+}
+
+@media screen and (max-width: 320px){
+    
+}

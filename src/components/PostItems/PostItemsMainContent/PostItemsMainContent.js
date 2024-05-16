@@ -32,14 +32,13 @@ const PostItemsMainContent = () => {
           setIsLoadingPage(false);
           // Handle errors here
       });
-}, [page, postType, category, tag, dispatch]);
+  }, [page, postType, category, tag, dispatch]);
 
   useEffect(() => {
     if (getAllFilteredPosts) {
       setAllPosts(getAllFilteredPosts);
     }
   }, [getAllFilteredPosts]);
-  
 
   useEffect(() => {
     if (allPosts && allPosts.length > 0) {
@@ -99,7 +98,7 @@ const PostItemsMainContent = () => {
               <EmptyCard title="Posts" linkName="Post" link="/posts/create-post" />
           )}
         </div>
-        <Pagination page={page} actionGet={actionFetchFilteredPosts} numberOfPages={numberOfPages} totalNumber={totalNumber} />
+        <Pagination pageName={`post-items/${title}/filtered`} page={page} actionGet={actionFetchFilteredPosts} id={title} numberOfPages={numberOfPages} totalNumber={totalNumber} />
       </div>
     </>
   )

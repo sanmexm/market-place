@@ -3,7 +3,7 @@ import { CONTACT_US_MESSAGES } from "../constants/actionTypes";
 
 const initialState = {
     isLoading: true,
-    getContactMessages: [],
+    getContactMessages: null,
 }
 
 const contactMessageSlice = createSlice({
@@ -17,7 +17,7 @@ const contactMessageSlice = createSlice({
             state.isLoading     = false;
         },
         setContactMessage: (state, action) => {
-            state.getContactMessages  = action.payload.data;
+            state.getContactMessages  = action.payload.success;
         },
     }
 })

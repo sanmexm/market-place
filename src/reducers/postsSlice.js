@@ -7,6 +7,7 @@ const initialState = {
     getAllFilteredPosts: [],
     getAllFilteredRelatedPosts: [],
     getAllFilteredMoreSupplierPosts: [],
+    getPostsByStoreId: [],
     getPostsByOwner: [],
     searchPost: [],
     currentPage: 1,
@@ -57,6 +58,12 @@ const postsSlice = createSlice({
             state.numberOfPages       = action.payload.numberOfPages
             state.totalNumber         = action.payload.totalNumber
         },
+        setPostsByStoreId: (state, action) => {
+            state.getPostsByStoreId     = action.payload.data
+            state.currentPage         = action.payload.currentPage
+            state.numberOfPages       = action.payload.numberOfPages
+            state.totalNumber         = action.payload.totalNumber
+        },
         setSinglePost: (state, action) => {
             state.singlePost          = action.payload;
         },
@@ -77,5 +84,5 @@ const postsSlice = createSlice({
     }
 });
 
-export const { startLoading, endLoading, setPosts, setFilteredPosts, setFilteredRelatedPosts, setFilteredMoreSupplierPosts, setPostsByOwner, setSinglePost, setPostsSearch, setUpdatePost, setDeletePost } = postsSlice.actions
+export const { startLoading, endLoading, setPosts, setFilteredPosts, setFilteredRelatedPosts, setFilteredMoreSupplierPosts, setPostsByOwner, setSinglePost, setPostsByStoreId, setPostsSearch, setUpdatePost, setDeletePost } = postsSlice.actions
 export default postsSlice.reducer

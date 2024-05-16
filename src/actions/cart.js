@@ -1,9 +1,9 @@
 import { startLoading, endLoading, setAddToCart, setIncrementCartItem, setDecrementCartItem, setRemoveCartItem, setClearCartItems, setCalculateTotalAmount } from '../reducers/cartSlice'
 
-export const actionAddToCart = (product, quantity) => async(dispatch) => {
+export const actionAddToCart = (item, quantity) => async(dispatch) => {
     try{
         dispatch({ type: startLoading.type })
-        dispatch(setAddToCart({ product, quantity }));
+        dispatch(setAddToCart(item, quantity));
         dispatch({ type: endLoading.type })
         // return data
     }catch(error){
@@ -22,10 +22,10 @@ export const actionCalculateTotalAmount = () => async(dispatch) => {
     }
 }
 
-export const actionIncrementCartItem = () => async(dispatch) => {
+export const actionIncrementCartItem = (item) => async(dispatch) => {
     try{
         dispatch({ type: startLoading.type })
-        dispatch(setIncrementCartItem());
+        dispatch(setIncrementCartItem(item));
         dispatch({ type: endLoading.type })
         // return data
     }catch(error){
@@ -33,10 +33,10 @@ export const actionIncrementCartItem = () => async(dispatch) => {
     }
 }
 
-export const actionDecrementCartItem = () => async(dispatch) => {
+export const actionDecrementCartItem = (item) => async(dispatch) => {
     try{
         dispatch({ type: startLoading.type })
-        dispatch(setDecrementCartItem());
+        dispatch(setDecrementCartItem(item));
         dispatch({ type: endLoading.type })
         // return data
     }catch(error){
@@ -44,10 +44,10 @@ export const actionDecrementCartItem = () => async(dispatch) => {
     }
 }
 
-export const actionRemoveItemFromCart = (product) => async(dispatch) => {
+export const actionRemoveItemFromCart = (item) => async(dispatch) => {
     try{
         dispatch({ type: startLoading.type })
-        dispatch(setRemoveCartItem(product));
+        dispatch(setRemoveCartItem(item));
         dispatch({ type: endLoading.type })
         // return data
     }catch(error){

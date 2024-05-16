@@ -22,8 +22,10 @@ const cartSlice = createSlice({
             state.isLoading     = false;
         },
         setAddToCart: (state, action) => {
-            const existingCartProductIndex = state.getCartItems.findIndex((item) => item?.product?._id === action.payload?.product?._id)
+            //the action.payload data must tally with what you called the setAddToCart function from the add to cart page
+            const existingCartProductIndex = state.getCartItems.findIndex((result) => result?.item?._id === action.payload?.item?._id)
             if(existingCartProductIndex >= 0){
+                //pass quantity if it already exists
                 state.getCartItems[existingCartProductIndex].quantity += 1;
             }else{
                 let assembledItem;
@@ -34,32 +36,29 @@ const cartSlice = createSlice({
                     assembledItem = { ...action.payload, quantity: 1 }
                     state.getCartItems.push(assembledItem)
                 }
-                //set to local storage
                 localStorage.setItem('cartItems', JSON.stringify(state.getCartItems))
             }
         },
         setIncrementCartItem: (state, action) => {
-            const existingCartProductIndex = state.getCartItems.findIndex((item) => item?.product?._id === action.payload?.product?._id)
-            
+            const existingCartProductIndex = state.getCartItems.findIndex((result) => result?.item?._id === action.payload?._id)
             if(existingCartProductIndex >= 0){
                 state.getCartItems[existingCartProductIndex].quantity += 1
-                localStorage.setItem('cartItems', JSON.stringify(state.getCartItems))
             }
+            localStorage.setItem('cartItems', JSON.stringify(state.getCartItems))
         },
         setDecrementCartItem: (state, action) => {
-            const existingCartProductIndex = state.getCartItems.findIndex((item) => item?.product?._id === action.payload?.product?._id)
-            
+            const existingCartProductIndex = state.getCartItems.findIndex((result) => result?.item?._id === action.payload?._id)
             if(existingCartProductIndex >= 0){
                 state.getCartItems[existingCartProductIndex].quantity -= 1
-                localStorage.setItem('cartItems', JSON.stringify(state.getCartItems))
             }
+            localStorage.setItem('cartItems', JSON.stringify(state.getCartItems))
         },
         setCalculateTotalAmount: (state, action) => {
-            let subTotal = state.getCartItems?.reduce((acc, item) => acc + (item?.product?.product?.price * item.quantity), 0)
-            state.getCartTotal = Number(subTotal)
+            let subTotal = state.getCartItems?.reduce((acc, result) => acc + (result?.item?.price * result.quantity), 0);
+            state.getCartTotal = Number(subTotal);
         },
         setRemoveCartItem: (state, action) => {
-            const updatedCartItem = state.getCartItems?.filter((item) => item?.product?._id !== action.payload?.product?._id)
+            const updatedCartItem = state.getCartItems?.filter((result) => result?.item?._id !== action.payload?.item?._id)
             state.getCartItems = updatedCartItem
             localStorage.setItem('cartItems', JSON.stringify(state.getCartItems))
         },

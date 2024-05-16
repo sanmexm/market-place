@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import {Button, FormField, Loader, LoginModal} from '../'
-import { userImg } from '../../assets';
+import { Button, FormField, Loader, LoginModal, SubmitPopUp } from '../'
+import { chat, userImg } from '../../assets';
 import { userValidateReview } from '../validations/PostReviews/PostReviews';
 import { actionCreatePostReview, actionFetchSinglePostReviews } from '../../actions/postReviews';
-import { actionFetchUserProfile } from '../../actions/profiles';
+import { actionFetchProfiles, actionFetchUserProfile } from '../../actions/profiles';
 import { actionFetchUser } from '../../actions/users';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import './postReviews.css'
 
@@ -18,10 +18,13 @@ const PostReviews = ({postId}) => {
     const [userData, setUserData]                 = useState(authData)
     const userId                                  = authData?.result?._id
     const dispatch                                = useDispatch();
-    const { singleUser }                          = useSelector((state) => state.userList)
-    const { singleUserProfile }                   = useSelector((state) => state.profileList)
-    const { getAllSinglePostReview, currentPage } = useSelector((state) => state.postReviewList)
+    const location                                = useLocation();
+    const searchParams                            = new URLSearchParams(location.search);
+    const page                                    = searchParams.get("page") || 1
+    const { getAllProfiles }                      = useSelector((state) => state.profileList)
+    const { isLoading, getAllSinglePostReview }   = useSelector((state) => state.postReviewList)
     const reviewsRef                              = useRef();
+    const [onOpen, setOnOpen]                     = useState(false);
     const [reviews, setReviews]                   = useState(getAllSinglePostReview)
     const [savingInfo, setSavingInfo]             = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -107,37 +110,59 @@ const PostReviews = ({postId}) => {
         const hasFormErrors = hasErrors();
         setIsButtonDisabled(hasFormErrors);
     }, [debouncedPostData]);
+
+    useEffect(() => {
+      async function fetchData() {
+        if (!isLoading && getAllSinglePostReview.length > 0) {
+          const updatedReviews = await Promise.all(
+            getAllSinglePostReview.map(async (post) => {
+              try {
+                const userData        = await dispatch(actionFetchUser(post.userId));
+                const userProfileData = await dispatch(actionFetchUserProfile(post.userId));
+                return { ...post, userData, userProfileData };
+              } catch (error) {
+                console.error(error);
+                return post;
+              }
+            })
+          );
+          setReviews(updatedReviews);
+        }
+      }
+  
+      fetchData();
+    }, [dispatch, isLoading, getAllSinglePostReview]);
   
     useEffect(() => {
-      dispatch(actionFetchSinglePostReviews(postId, currentPage))
-    }, [postId, currentPage, dispatch]);
+      dispatch(actionFetchSinglePostReviews(postId, page))
+    }, [postId, page, dispatch]);
+
+    useEffect(() => {
+      dispatch(actionFetchProfiles(page))
+    }, [page, dispatch])
 
     useEffect(() => {
       setReviews(getAllSinglePostReview); // Update reviews state when getAllSinglePostReview changes
     }, [getAllSinglePostReview]);
 
-    useEffect(() => {
-      if (!reviews || !Array.isArray(reviews)) {
-        // Handle the case when reviews is null, undefined, or not an array
-        return;
-      }
-      
-      const userIdsToFetch = reviews
-      .filter(review => review && review.userId && (!singleUserProfile || !singleUserProfile[review.userId]))
-      .map(review => review.userId);
-      if (userIdsToFetch.length > 0) {
-        userIdsToFetch.forEach(userId => {
-          dispatch(actionFetchUserProfile(userId));
-          dispatch(actionFetchUser(userId));
-        });
-      }
-    }, [reviews, dispatch]);
+    const handleModalSubmit = () => {
+      setOnOpen(true)
+    }
 
     const handleSubmit = async(e) => {
       e.preventDefault();
-      const returnConfirm = window.confirm('Are you sure you want to submit a review?')
-      if(returnConfirm){
+      handleModalSubmit()
+    }
+
+    const cancelPostCreation = () => {
+      setOnOpen(false); // Close the modal
+      setSavingInfo(false);
+    };
+
+    const confirmPostCreation = async() => {
+      if (Array.isArray(getAllProfiles) && getAllProfiles.find(profile => profile.userId === userId)) {
         setSavingInfo(true);
+        setIsButtonDisabled(true)
         const response = await dispatch(actionCreatePostReview(postId, userId, postData.review))
         try{
           if (response.success === true) {
@@ -155,27 +180,31 @@ const PostReviews = ({postId}) => {
           setErrorMessage("unable to upload data, please check your internet and try again")
           setSavingInfo(false)
         }
+        setOnOpen(false); // Close the modal after confirmation
+      } else {
+        setErrorMessage("Please set up your profile before posting a review")
+        setOnOpen(false);
       }
-    }
+    };
 
   return (
     <>
-        <div className=''>
+        <div className='post-reviews-main-wrapper'>
           <div ref={reviewsRef} />
           <div className='post-reviews-main-header'>
             <span>Reviews</span>
-            <Link to={`/reviews/post-review/${postId}`} className='link-to-reviews'>view all reviews</Link>
+            <Link to={`/reviews/post-reviews/${postId}`} className='link-to-reviews'>view all reviews</Link>
           </div>
           <div className='post-reviews-content-container'>
             <div className='post-reviews-content-details-wrapper'>
               {reviews.length > 0 && reviews.map((result, index) => (
                 <div className='post-reviews-content-details' key={index}>
                   <div className='post-reviews-content-details-imgBx'>
-                    <img src={singleUserProfile?.selectedFile || userImg} alt='user img' />
+                    <img src={result?.userProfileData?.selectedFile || userImg} alt="user img" />
                   </div>
                   <div className='post-reviews-content-details-review'>
                     <div>
-                      <h3>{singleUser?.firstName} {singleUser?.lastName}</h3>
+                      <h3>{`${result?.userData?.firstName} ${result?.userData?.lastName}`}</h3>
                       <small>{moment.utc(result?.createdAt).local().fromNow()}</small>
                     </div>
                     <div className='post-reviews-content-details-review-text'>
@@ -193,6 +222,9 @@ const PostReviews = ({postId}) => {
                   </div>
                   <FormField textareaType maxLength={1000} labelName="Review" name="review" value={postData.review} handleChange={handleChange} isLoadingBtn={isLoadingBtn.review} isValid={isValid.review} errors={reviewErrors || []} />
 
+                  {/* check to set up profile before review can be made */}
+                  <SubmitPopUp onOpen={onOpen} onClose={cancelPostCreation} onConfirm={confirmPostCreation} popUpImage={chat} prompt="Are you sure you want to submit review?" />
+                  {/* collapse the SubmitPopUp after submitting */}
                   <Button onClickButton buttonClickWrap={savingInfo ? `button-login-submitted` : `button-login-submit`} onClickName={savingInfo ? <>{<Loader />} Sending...</> : "Submit"} isButtonDisabled={isButtonDisabled} buttonClasses={savingInfo ? ['button-disabled'] : (isButtonDisabled ? ['buttonDisabledClass'] : ['buttonEnabledClass'])} disabled={savingInfo} />
                   {errorMessage && <p className='error-msg'>{errorMessage}</p>}
                 </form>

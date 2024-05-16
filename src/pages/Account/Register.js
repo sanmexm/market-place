@@ -196,6 +196,8 @@ const Register = () => {
 
     const confirmPostCreation = async() => {
         setSavingInfo(true);
+        setOnOpen(false);
+        setIsButtonDisabled(true)
         const response = await dispatch(actionCreateUser(postData));
         try{
           if (response.success === true) {
@@ -242,6 +244,7 @@ const Register = () => {
             <FormField inputType type={hideShow ? 'text' : 'password'} labelName="Confirm Password" name="confirmPassword" value={postData.confirmPassword} handleChange={handleChange} isLoadingBtn={isLoadingBtn.confirmPassword} isValid={isValid.confirmPassword} errors={confirmPasswordErrors || []} />
 
             <SubmitPopUp onOpen={onOpen} onClose={cancelPostCreation} onConfirm={confirmPostCreation} popUpImage={userImg} prompt="Are you sure you want to create account" />
+            {/* collapse the SubmitPopUp after submitting */}
             <Button onClickButton buttonClickWrap={savingInfo ? `button-login-submitted` : `button-login-submit`} onClickName={savingInfo ? <>{<Loader />} Creating...</> : "Sign Up"} isButtonDisabled={isButtonDisabled} buttonClasses={savingInfo ? ['button-disabled'] : (isButtonDisabled ? ['buttonDisabledClass'] : ['buttonEnabledClass'])} disabled={savingInfo} />
 
             {errorMessage && <p className='error-msg'>{errorMessage}</p>}

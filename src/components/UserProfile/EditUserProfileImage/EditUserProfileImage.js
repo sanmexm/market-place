@@ -1,29 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { actionFetchProfile, actionUpdateProfile } from '../../../actions/profiles';
+import { useDispatch } from 'react-redux';
+import { actionUpdateProfile } from '../../../actions/profiles';
 import { usersValidateSelectedFile } from '../../validations/users/usersProfile';
-import {Button, FormField, Loader} from '../..';
+import {Button, FormField, Loader, SubmitPopUp} from '../..';
 import { PhotoRoundedIcon } from '../../../utils/constants';
+import { profile } from '../../../assets';
 
 import './editUserProfileImage.css'
 
-const EditUserProfileImage = () => {
+const EditUserProfileImage = ({id, userProfileData}) => {
     const dispatch                                          = useDispatch();
-    const { id }                                            = useParams();
-    const { singleProfile }                                 = useSelector((state) => state.profileList);
     const [savingInfo, setSavingInfo]                       = useState(false);
     const [isButtonDisabled, setIsButtonDisabled]           = useState(true);
-    const [fetchError, setFetchError]                       = useState(false);
-    const [productImg, setProductImg]                       = useState(singleProfile?.selectedFile);
+    const [onOpen, setOnOpen]                               = useState(false);
+    const [productImg, setProductImg]                       = useState(userProfileData?.selectedFile | '');
     const [selectedFileErrors, setSelectedFileErrors]       = useState(null);
     const [errorMessage, setErrorMessage]                   = useState(null);
     
-    const [ postData, setPostData ]                         = useState({selectedFile: singleProfile?.selectedFile || ''})
-
+    const [ postData, setPostData ]                         = useState({selectedFile: userProfileData?.selectedFile || ''})
     const [ isLoadingBtn, setIsLoadingBtn ]                 = useState({selectedFile: false})
-
     const [ isValid, setIsValid ]                           = useState({selectedFile: false })
 
     const useDebounce = (value, delay ) => {
@@ -72,7 +68,7 @@ const EditUserProfileImage = () => {
     }
 
     useEffect(() => {
-    const validateSelectedFile = () => {
+      const validateSelectedFile = () => {
         const { isValid, errors } = usersValidateSelectedFile(debouncedPostData.selectedFile);
         setIsValid((prevState) => ({
           ...prevState,
@@ -83,60 +79,57 @@ const EditUserProfileImage = () => {
           selectedFile: false,
         }));
         return errors;
-    };
+      };
 
-    const selectedFileErrors     = validateSelectedFile()
+      const selectedFileErrors     = validateSelectedFile()
 
-    setSelectedFileErrors(selectedFileErrors)
+      setSelectedFileErrors(selectedFileErrors)
 
-    const hasErrors = () => {
-      // Check if any error exists in the form data
-      if ( selectedFileErrors.length > 0 ) {
-        return true;
-      } else{
-        return false;
-      }
-    };
-    const hasFormErrors = hasErrors();
-    setIsButtonDisabled(hasFormErrors);
-    }, [debouncedPostData, singleProfile]);
-
-    useEffect(() => {
-      setPostData({selectedFile: singleProfile?.selectedFile || ''});
-    }, [singleProfile]);
-
-  useEffect(() => {
-    dispatch(actionFetchProfile(id))
-    .then((response) => {
-      //this is getting payload and not payload.data in redux, reason for this method
-      if(!response) {
-        setFetchError(true)
-      }
-    })
-  }, [id, dispatch])
-
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    const returnConfirm = window.confirm('Are you sure you want to update profile?')
-    if(returnConfirm){
-      setSavingInfo(true);
-      const response = await dispatch(actionUpdateProfile(id, postData))
-      try{
-        if (response.status === 200) {
-          toast.success(response.successMessage)
-          setErrorMessage(null);
-          setProductImg(null)
-          setSavingInfo(false)
-        } else if (response.status === 400) {
-          setErrorMessage(response.errorMessage);
+      const hasErrors = () => {
+        // Check if any error exists in the form data
+        if ( selectedFileErrors.length > 0 ) {
+          return true;
+        } else{
+          return false;
         }
-      }catch(error){
-        setErrorMessage(error.response.status)
-        setErrorMessage("unable to upload data, please check your internet and try again")
-        setSavingInfo(false)
-      }
+      };
+      const hasFormErrors = hasErrors();
+      setIsButtonDisabled(hasFormErrors);
+    }, [debouncedPostData]);
+
+    const handleModalSubmit = () => {
+      setOnOpen(true)
     }
-  }
+
+    const handleSubmit = async(e) => {
+      e.preventDefault();
+      handleModalSubmit()
+    }
+
+    const cancelPostCreation = () => {
+      setOnOpen(false); // Close the modal
+      setSavingInfo(false);
+    };
+
+    const confirmPostCreation = async() => {
+      setSavingInfo(true);
+        const response = await dispatch(actionUpdateProfile(id, postData))
+          try{
+            if (response.success === 200) {
+              toast.success("Profile updated successfully")
+              setErrorMessage(null);
+              setSavingInfo(false)
+              setProductImg(null)
+            } else if (response.status === 400) {
+              setErrorMessage(response.data.message);
+            }
+          }catch(error){
+            setErrorMessage(error.response.status)
+            setErrorMessage("unable to upload data, please check your internet and try again")
+            setSavingInfo(false)
+          }
+      setOnOpen(false); // Close the modal after confirmation
+    };
 
   return (
     <>
@@ -151,6 +144,7 @@ const EditUserProfileImage = () => {
             </div>
           </div>
 
+          <SubmitPopUp onOpen={onOpen} onClose={cancelPostCreation} onConfirm={confirmPostCreation} popUpImage={profile} prompt="Are you sure you want to update profile image" />
           <Button onClickButton buttonClickWrap={savingInfo ? `button-login-submitted` : `button-login-submit`} onClickName={savingInfo ? <>{<Loader />} Updating...</> : "Update"} isButtonDisabled={isButtonDisabled} buttonClasses={savingInfo ? ['button-disabled'] : (isButtonDisabled ? ['buttonDisabledClass'] : ['buttonEnabledClass'])} disabled={savingInfo} />
 
           {errorMessage && <p className='error-msg'>{errorMessage}</p>}

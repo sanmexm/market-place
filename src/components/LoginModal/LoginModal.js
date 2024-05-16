@@ -10,7 +10,6 @@ import './loginModal.css'
 
 const LoginModal = ({onSuccessLogin}) => {
     const dispatch                                 = useDispatch();
-    // const [authData, setAuthData]                  = useState(JSON.parse(localStorage.getItem('authData')));
     const modalNavRef                              = useRef()
     const [hideShow, setHideShow]                  = useState(false);
     const [savingInfo, setSavingInfo]              = useState(false);
@@ -121,7 +120,7 @@ const LoginModal = ({onSuccessLogin}) => {
         <div className="modal-account-container">
           <form className='account-modal-login-container' onSubmit={handleSubmit} autoComplete="off">
             <div className='account-login-container-title'>
-              <h3>Login</h3>
+              <h3>Logins</h3>
             </div>
 
             <div className='account-login-input-btn-pass-container'>

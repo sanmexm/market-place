@@ -108,6 +108,7 @@ const ResetPassword = () => {
 
     const confirmPostCreation = async() => {
       setSavingInfo(true);
+      setIsButtonDisabled(true)
       const response = await dispatch(actionUpdatePassword(id, postData));
       try {
         if (response.status === 200) {

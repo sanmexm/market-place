@@ -1,4 +1,16 @@
 // selectedFile, title, category, price, description, link, location, contact 
+const postValidateStoreName = (postData) => {
+    const errors = [];
+    let isValid  = true;
+
+    // validate title
+    if (postData === '') {
+        errors.push('');
+        isValid = true; 
+    }
+    return { isValid, errors };
+}
+
 const postValidatePostType = (postData) => {
     const errors = [];
     let isValid  = true;
@@ -110,6 +122,7 @@ const postValidateDescription = (postData) => {
 
 
 export {
+    postValidateStoreName,
     postValidatePostType,
     postValidateSelectedFile,
     postValidateTitle,

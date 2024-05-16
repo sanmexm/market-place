@@ -83,6 +83,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     setSavingInfo(true); // Set loading to true to show loading state
     setMessage(false);
+    setIsButtonDisabled(true)
   
     try {
       const response = await dispatch(actionVerifyEmailPassword(postData.emailAddress));

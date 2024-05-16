@@ -41,6 +41,12 @@
 #dark .store-post-body-head{
     border-bottom: 1px solid var(--faded-white);
 }
+.store-post-create-new-store{
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+}
 .store-post-body-posts{
     margin: 2rem 0;
 }

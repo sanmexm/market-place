@@ -1,0 +1,43 @@
+.contact-section-wrapper{
+    width: 100%;
+    min-height: 100vh;
+}
+.contact-container{
+    display: flex;
+    flex-direction: column;
+    max-width: 50rem;
+    width: 100%;
+    gap: 2rem;
+    margin: 4rem auto;
+    padding: 1rem 2rem;
+}
+.contact-form-container{
+    width: 100%;
+    position: relative;
+}
+.contact-address-container{
+    width: 100%;
+}
+
+/* media queries */
+@media screen and (max-width: 1024px){
+    
+}
+
+@media screen and (max-width: 992px){
+    
+}
+
+@media screen and (max-width: 768px){
+    
+}
+
+@media screen and (max-width: 430px){
+    .contact-container{
+        padding: 1rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 320px){
+    
+}

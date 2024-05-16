@@ -1,5 +1,5 @@
 import * as api from '../api'
-import { startLoading, endLoading, setPosts, setPostsByOwner, setSinglePost, setPostsSearch, setUpdatePost, setDeletePost, setFilteredPosts, setFilteredRelatedPosts, setFilteredMoreSupplierPosts } from '../reducers/postsSlice'
+import { startLoading, endLoading, setPosts, setPostsByOwner, setSinglePost, setPostsSearch, setUpdatePost, setDeletePost, setFilteredPosts, setFilteredRelatedPosts, setFilteredMoreSupplierPosts, setPostsByStoreId } from '../reducers/postsSlice'
 //action creators
 // redux thunk allows additional arrow function to a function
 
@@ -105,6 +105,21 @@ export const actionFetchFilteredPosts = (postType, category, tag, sort, page) =>
             console.log("Error details:", error.message);
             throw error; // Re-throw the error to be caught in the handleSubmit function
         }
+    }
+}
+
+export const actionFetchPostsByStoreId = (storeId, page) => async(dispatch) => {
+    try{
+        dispatch({ type: startLoading.type })
+        const { data } = await api.fetchPostsByStoreId(storeId, page)
+        dispatch({
+            type: setPostsByStoreId.type,
+            payload: data
+        })
+        dispatch({ type: endLoading.type })
+        return data
+    }catch(error){
+        console.log(error)
     }
 }
 

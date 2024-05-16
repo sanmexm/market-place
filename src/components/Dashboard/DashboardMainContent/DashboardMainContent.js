@@ -22,7 +22,7 @@ const DashboardMainContent = () => {
   const [onePost, setOnePost]                                      = useState(null);
   const {isLoading, getPostsByOwner, totalNumber, numberOfPages }  = useSelector((state) => state.postList)
   const [allPosts, setAllPosts]                                    = useState([]);
-  const [isEdit, setIsEdit]                                        = useState(false)
+  const [isEdit, setIsEdit]                                        = useState(false);
   const [onOpen, setOnOpen]                                        = useState({});
 
   useEffect(() => {
@@ -55,11 +55,11 @@ const DashboardMainContent = () => {
     setOnOpen((prevIndex) => (prevIndex === index ? null : index));
   }
 
-  const cancelPostCreation = (index) => {
+  const cancelPostDeletion = () => {
     setOnOpen(null);
   };
 
-  const confirmPostCreation = async(detailId, index) => {
+  const confirmPostDeletion = async(detailId) => {
     try {
       await dispatch(actionDeletePost(detailId));
       setAllPosts(allPosts.filter((post) => post._id !== detailId));
@@ -97,14 +97,14 @@ const DashboardMainContent = () => {
             allPosts.map((result, index) => (
               <div key={index} className='dashboard-post-body-posts'>
                 <div className='dashboard-post-body-title'>
-                  <Link to={`/posts/view-post/${result?._id}`} className='dashboard-post-body-view-post'>View post</Link>
+                  <Link to={`/stores/view-user-store/${result?.storeId}`} className='dashboard-post-body-view-post'>View in store</Link>
                   <div className='dashboard-post-body-title-icons-wrapper'>
                     <div className='dashboard-post-body-title-icons'>
-                      <Button linkButton linkTo={`/posts/view-post/${result?._id}`} title="view post" linkIcon={<PageviewRoundedIcon />} />
+                      <Button linkButton linkTo={`/posts/view-user-post/${result?._id}`} title="view post" linkIcon={<PageviewRoundedIcon />} />
                       <Button onClickButton title="Edit post" buttonIcon={<EditRoundedIcon />} onClickNavigate={handleEditClick(index)} />
 
                       <div className='dashboard-post-body-title-delete-button-wrap'>
-                        <DeletePopUp onOpen={onOpen === index} onClose={() => cancelPostCreation(index)} onConfirm={() => confirmPostCreation(result?._id, index)} popUpImage={trash} prompt={`Are you sure you want to delete "${result?.title}"`} />
+                        <DeletePopUp onOpen={onOpen === index} onClose={cancelPostDeletion} onConfirm={() => confirmPostDeletion(result?._id, index)} popUpImage={trash} prompt={`Are you sure you want to delete "${result?.title}"`} />
 
                         <Button onClickButton title="Delete post" buttonIcon={<DeleteRoundedIcon />} onClickNavigate={() => handleDeletePost(index)} />
                       </div>
@@ -112,10 +112,10 @@ const DashboardMainContent = () => {
 
                     <div className='edit-dashboard-menu-wrapper'>
                       <div className={isEdit[index] ? 'edit-dashboard-menu-option active' : 'edit-dashboard-menu-option'}>
-                        <Link to={`/posts/edit-post/${result?._id}`} className='edit-dashboard-menu-detail '>
-                          edit post
+                        <Link to={`/posts/view-user-post/${result?._id}`} className='edit-dashboard-menu-detail '>
+                          view post
                         </Link>
-                        <Link to={`/posts/utilization/${result?._id}`} className='edit-dashboard-menu-detail'>
+                        <Link to={`/posts/promotion/${result?._id}`} className='edit-dashboard-menu-detail'>
                           promote post
                         </Link>
                       </div>
@@ -152,7 +152,7 @@ const DashboardMainContent = () => {
             ) : (
               <EmptyCard title="Posts" linkName="Post" link="/posts/create-post" />
           )}
-          <Pagination page={page} actionGet={actionFetchPostsByUser} id={userId} numberOfPages={numberOfPages} totalNumber={totalNumber} />
+          <Pagination pageName="posts/my-posts" page={page} actionGet={actionFetchPostsByUser} id={userId} numberOfPages={numberOfPages} totalNumber={totalNumber} />
         </div>
       </div>
     </>

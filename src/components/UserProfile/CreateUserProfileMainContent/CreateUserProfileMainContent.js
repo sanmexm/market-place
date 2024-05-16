@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionFetchProfile } from '../../../actions/profiles'
-import { Loader, UserHeader, Button } from '../..'
+import { actionFetchUserProfile } from '../../../actions/profiles'
+import { UserHeader, Button } from '../..'
 import { AddBoxRoundedIcon } from '../../../utils/constants'
 import { useNavigate } from 'react-router-dom'
 import CreateProfileForm from './CreateProfileForm'
@@ -9,21 +9,25 @@ import CreateProfileForm from './CreateProfileForm'
 import './createUserProfileMainContent.css'
 
 const CreateUserProfileMainContent = () => {
-  const authData                      = JSON.parse(localStorage.getItem('authData'))
-  const userUniqueId                  = authData?.result?._id
-  const dispatch                      = useDispatch();
-  const navigate                      = useNavigate()
-  const {isLoading, singleProfile }   = useSelector((state) => state.profileList)
+  const authData             = JSON.parse(localStorage.getItem('authData'))
+  const userUniqueId         = authData?.result?._id
+  const dispatch             = useDispatch();
+  const navigate             = useNavigate()
+  const {singleUserProfile}  = useSelector((state) => state.profileList)
 
   useEffect(() => {
-    dispatch(actionFetchProfile(userUniqueId))
-  }, [userUniqueId, dispatch])
-
-  useEffect(() => {
-    if (singleProfile) {
-      navigate(`/users/user-profile`);
+    if (userUniqueId) {
+      dispatch(actionFetchUserProfile(userUniqueId));
     }
-  }, [singleProfile, navigate]);
+  }, [userUniqueId, dispatch]);
+
+  useEffect(() => {
+    if (singleUserProfile) {
+      if (singleUserProfile.userId === userUniqueId) {
+        navigate(`/users/user-profile`);
+      }
+    }
+  }, [userUniqueId, singleUserProfile, navigate]);
 
   return (
     <>
@@ -41,13 +45,9 @@ const CreateUserProfileMainContent = () => {
 
         <div className='dashboard-post-body'>
           <div className='dashboard-post-body-head'>
-            <h2>Profile</h2>
+            <h2>Please set up your profile</h2>
           </div>
-          {isLoading ? (
-            <Loader />
-          ) : !singleProfile ? (
-            <CreateProfileForm userId={userUniqueId} />
-          ) : null }
+          <CreateProfileForm userId={userUniqueId} />
         </div>
       </div>
     </>
