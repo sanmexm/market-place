@@ -1,6 +1,6 @@
 # Multi Vendor Ecommerce app
 
-ECommerce multivendor web application using React and TypeScript, NodeJs, express and MongoDb. The project aimed to create a fully functional online store that included product browsing, user authentication, shopping cart management, store creation, and order processing.
+ECommerce multivendor web application using React and TypeScript, NodeJs, express and MongoDb. The project aimed to create a fully functional online store that included product browsing, user authentication, shopping cart management, store creation, and order processing
 
 ## Set up
 
