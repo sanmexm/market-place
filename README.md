@@ -8,7 +8,7 @@ To access all of the files, i recommend you fork this repo and clone it locally.
 
 You will also need to make sure that you have all the required react libraries. You can do that by running a ``npm i`` in your terminal
 
-### Navigate to Library.
+### Navigate to Library
 
 `cd market-place/client`
 
