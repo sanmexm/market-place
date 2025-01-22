@@ -6,7 +6,7 @@ ECommerce multivendor web application using React and TypeScript, NodeJs, expres
 
 To access all of the files, i recommend you fork this repo and clone it locally. Instructions on how to do this can be found [here](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)
 
-You will also need to make sure that you have all the required react libraries. You can do that by running a ``npm i`` in your terminal
+You will also need to make sure that you have all the required react libraries. You can do that by running a ``npm i`` in your terminal.
 
 ### Navigate to Library
 
