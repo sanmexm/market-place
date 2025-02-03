@@ -2,7 +2,7 @@
 
 ECommerce multivendor web application using React and TypeScript, NodeJs, express and MongoDb. The project aimed to create a fully functional online store that included product browsing, user authentication, shopping cart management, store creation, and order processing
 
-## Set up
+## Set up.
 
 To access all of the files, i recommend you fork this repo and clone it locally. Instructions on how to do this can be found [here](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)
 
